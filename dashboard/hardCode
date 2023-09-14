@@ -1,0 +1,83 @@
+<?php 
+                                        $user_id=$_SESSION['loginInfo']["id"];
+                                        $fetchCatQuerry="SELECT attr_name, id FROM attribute WHERE admin_id=$user_id";
+                                        $querry_result=mysqli_query($conn,$fetchCatQuerry);
+
+                                        if($querry_result==true){
+                                            $count=mysqli_num_rows($querry_result);
+                                            $slNo=1;
+                                            if( $count>0){
+                                                while($rows=mysqli_fetch_assoc($querry_result)){
+                                                $attr_id=$rows['id'];
+                                                $attr_name=$rows['attr_name'];
+                                                    echo "<option value='$attr_id'>$attr_name</option>";
+                                                } 
+                                            }
+                                        }
+                                    ?>
+
+/////////////////////////////////////========================////////////////////////////////////////////////////////////////
+
+                                    <?php
+                                    include "config/dbConn.php";
+
+                                    $fetchQuery="SELECT pExt.id, pExt.attr_val_id, pExt.extended_price, pExt.prd_id, attrV.attrValue_id, attrV.attr_value FROM prod_attribute_values pExt, attributevalues attrV WHERE pExt.prd_id=$prd_id AND pExt.attr_val_id=attrV.attrValue_id";
+                                    $query_result=mysqli_query($conn,$fetchQuery);
+
+                                    if($query_result==true){
+                                        $count=mysqli_num_rows($query_result);
+                                        $slNo=1;
+
+                                        if( $count>0){
+                                            $i=0;
+                                            while($rowsAttr=mysqli_fetch_assoc($query_result)){	
+                                                $prd_attr_extendId=$rowsAttr['id'];
+                                                $attr_id=$rowsAttr['attrValue_id'];
+                                                $attr_value=$rowsAttr['attr_value'];
+                                                $attr_extendedPrice=$rowsAttr['extended_price'];
+                                                $i++;
+                                                // echo var_dump($rowsAttr);
+                                    ?>
+                                                <div class="col-sm-3">
+                                                    <!-- //hidden input to sending id of that extended attribute price to the backend -->
+                                                    <input style="display:none" value=<?php echo $prd_attr_extendId; ?> name=<?php echo "extPriceId".$i;?> type="text">
+                                                </div>
+                                                <label class="col-sm-3 col-form-label form-label-title"><?php echo $attr_value;?></label>
+                                                <div class="col-sm-6">
+                                                    <div class="bs-example">
+                                                        <input class="form-control" name=<?php echo "attr-ExtendedVal".$i?> type="number" value=<?php echo $attr_extendedPrice; ?> min="0" step="0.01" value="0.00">
+                                                    </div>
+                                                </div>
+
+                                    <?php
+                                        }}
+                                        echo "<input style=\"display:none\" value=".$i." name='noOfAttrValue' type='number'>";
+                                    ?>
+<!-- ---------------------------------------------------------------------------------------------------------------------------------------- -->
+
+<div class="mb-5 row align-items-center">
+                                  <label class="form-label-title col-lg-2 col-md-3 mb-0">Address</label>
+                                  <div class="col-md-8 col-lg-9">
+                                    <div class="mb-3">
+                                      <label>Country</label>
+                                      <input name="firstName" class="form-control" type="text">
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-md-3 col-lg-4">
+                                        <label>City</label>
+                                        <input name="firstName" class="form-control" type="text">
+                                      </div>
+                                      <div class="col-md-3 col-lg-4">
+                                        <label>Country</label>
+                                        <input name="firstName" class="form-control" type="text">
+                                      </div>
+                                      <div class="col-md-3 col-lg-4">
+                                        <label>Zip Code</label>
+                                        <input name="firstName" class="form-control" type="text">
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="ol-md-1 col-lg-1">
+                                    <i class="ri-close-fill text-danger" onClick="deleteAttribute(this.parentElement)" style="cursor:pointer;font-weight: bolder;"></i>
+                                  </div>
+                              </div>
