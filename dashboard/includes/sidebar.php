@@ -120,10 +120,10 @@
                 </a>
                 <ul class="sidebar-submenu">
                   <li>
-                    <a href="users.php">Users</a>
+                    <a href="all-pharmacy.php">Users</a>
                   </li>
                   <li>
-                    <a href="add-user.php">Add user</a>
+                    <a href="add-pharmacy.php">Add user</a>
                   </li>
                 </ul>
               </li>

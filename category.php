@@ -58,7 +58,7 @@ if(isset($_SESSION['status']))
                         <thead>
                           <tr>
                             <th>Category Name</th>
-                            <th>Product Image</th>
+                            <th>Category Image</th>
                             <th>Slug</th>
                             <th>Option</th>
                           </tr>
@@ -73,7 +73,7 @@ if(isset($_SESSION['status']))
                                   }
                     
                         settype($user_id,"integer");  
-                        $fetchCatQuerry="SELECT * FROM category WHERE `admin_id`=$user_id";
+                        $fetchCatQuerry="SELECT * FROM category";
                         $querry_result=mysqli_query($conn,$fetchCatQuerry);
 
                         if($querry_result==true){

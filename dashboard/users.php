@@ -60,7 +60,7 @@ $fetchPrdQuery="SELECT p.prd_id, p.prd_name, p.prd_image, p.prd_cat_id, p.prd_pr
                   <div class="title-header option-title">
                     <h5>All Users</h5>
                     <form class="d-inline-flex">
-                      <a href="add-user.php" class="align-items-center btn btn-theme d-flex">
+                      <a href="add-pharmacy.php" class="align-items-center btn btn-theme d-flex">
                         <i data-feather="plus"></i>Add New
                       </a>
                     </form>

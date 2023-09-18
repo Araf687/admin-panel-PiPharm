@@ -23,7 +23,7 @@ if ( isset( $_COOKIE['login_status'] ) ) {
 
             if ( mysqli_num_rows( $caheckUser_run ) > 0 ) {
                 $_SESSION['status'] = "User exist";
-                header( "Location: ../add-user.php" );
+                header( "Location: ../add-pharmacy.php" );
             } else {
                 $user_pass = password_hash( $user_pass, PASSWORD_DEFAULT );
                 $addUser_querry = "INSERT INTO user (`first_name`, `last_name`, `user_email`, `user_phone`, `user_type`, `user_pass`,`admin_id`) VALUES ('$user_firstName','$user_lastName','$user_email','$phone','','$user_pass',$admin_id)";
@@ -47,15 +47,15 @@ if ( isset( $_COOKIE['login_status'] ) ) {
                             }
                         }
                     }
-                    header( "Location: ../add-user.php" );
+                    header( "Location: ../add-pharmacy.php" );
                 } else {
                     $_SESSION['status'] = "something went wrong";
-                    header( "Location: ../add-user.php" );
+                    header( "Location: ../add-pharmacy.php" );
                 }
             }
         } else {
             $_SESSION['status'] = "password does not match";
-            header( "Location: ../add-user.php" );
+            header( "Location: ../add-pharmacy.php" );
         }
     } else if ( isset( $_POST['UpdateUser'] ) ) {
         $user_id = $_POST['user_id'];
@@ -100,14 +100,14 @@ if ( isset( $_COOKIE['login_status'] ) ) {
                 } else {
                     $_SESSION['status'] = "user address not found";
                 }
-                header( "Location: ../users.php" );
+                header( "Location: ../all-pharmacy.php" );
             } else {
                 $_SESSION['status'] = "something went wrong";
-                header( "Location: ../users.php" );
+                header( "Location: ../all-pharmacy.php" );
             }
         } else {
             $_SESSION['status'] = "password does not match";
-            header( "Location: ../users.php" );
+            header( "Location: ../all-pharmacy.php" );
         }
 
     } else if ( isset( $_GET['del_id'] ) ) {
@@ -121,11 +121,11 @@ if ( isset( $_COOKIE['login_status'] ) ) {
             if ( $run_query ) {
                 $_SESSION['status'] = "Deleted Successfully";
             }
-            header( "Location: ../users.php" );
+            header( "Location: ../all-pharmacy.php" );
 
         } else {
             $_SESSION['status'] = "something went wrong";
-            header( "Location: ../users.php" );
+            header( "Location: ../all-pharmacy.php" );
         }
 
     }

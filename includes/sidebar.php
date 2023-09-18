@@ -1,3 +1,9 @@
+
+<?php 
+session_start();
+$adminType=$_SESSION['loginInfo']["adminType"];
+$admin=$_SESSION['loginInfo']["adminType"]=="admin";
+?>
 <!-- Page Sidebar Start-->
 <div class="sidebar-wrapper">
   <div id="sidebarEffect"></div>
@@ -37,7 +43,7 @@
             </a>
           </li>
 
-          <li class="sidebar-list">
+          <li class="sidebar-list" style=<?=$admin?"display:none":"display:block"?>>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
             <i class="ri-shape-line"></i>
               <span>Orders</span>
@@ -47,10 +53,10 @@
                 <a href="orders.php">Orders</a>
               </li>
             </ul>
-          </li>
+          </li> 
 
-          <li class="sidebar-list">
-            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+          <li class="sidebar-list" style=<?=$admin?"display:none":"display:block"?>>
+            <a class="linear-icon-link sidebar-link sidebar-title"  href="javascript:void(0)">
               <i class="ri-store-3-line"></i>
               <span>Product</span>
             </a>
@@ -81,7 +87,7 @@
             </ul>
           </li>
 
-          <li class="sidebar-list">
+          <li class="sidebar-list" style=<?=$admin?"display:none":"display:block"?>>
             <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
               <i class="ri-price-tag-3-line"></i>
               <span>Sub Category</span>
@@ -104,10 +110,10 @@
                 </a>
                 <ul class="sidebar-submenu">
                   <li>
-                    <a href="users.php">All Pharmacy Admin</a>
+                    <a href="all-pharmacy.php">All Pharmacy Admin</a>
                   </li>
                   <li>
-                    <a href="add-user.php">Add Pharmacy admin</a>
+                    <a href="add-pharmacy.php">Add Pharmacy admin</a>
                   </li>
                 </ul>
               </li>
@@ -131,7 +137,7 @@
               </li>
              
 
-          <li class="sidebar-list">
+          <li class="sidebar-list" style=<?=$admin?"display:none":"display:block"?>>
             <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
               <i class="ri-settings-line"></i>
               <span>Settings</span>

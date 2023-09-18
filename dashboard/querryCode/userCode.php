@@ -27,7 +27,7 @@
     
             if(mysqli_num_rows($caheckUser_run)>0){
                 $_SESSION['status']="User exist";
-                header("Location: ../add-user.php");
+                header("Location: ../add-pharmacy.php");
             }
             else{
                 $user_pass = password_hash($user_pass, PASSWORD_DEFAULT);
@@ -53,17 +53,17 @@
                             }
                         }
                     }
-                    header("Location: ../add-user.php");
+                    header("Location: ../add-pharmacy.php");
                 }
                 else{
                     $_SESSION['status']="something went wrong";
-                    header("Location: ../add-user.php");
+                    header("Location: ../add-pharmacy.php");
                 }
             }
         }
         else{
             $_SESSION['status']="password does not match";
-            header("Location: ../add-user.php");
+            header("Location: ../add-pharmacy.php");
         }
     }
     
@@ -110,16 +110,16 @@
                     else{
                         $_SESSION['status']="user address not found";
                     }
-                    header("Location: ../users.php"); 
+                    header("Location: ../all-pharmacy.php"); 
                 }
                 else{
                     $_SESSION['status']="something went wrong";
-                    header("Location: ../users.php");
+                    header("Location: ../all-pharmacy.php");
                 }
             }
             else{
                 $_SESSION['status']="password does not match";
-                header("Location: ../users.php");
+                header("Location: ../all-pharmacy.php");
             }
            
         
@@ -135,12 +135,12 @@
                 if($run_query){
                     $_SESSION['status']="Deleted Successfully";
                 }
-                header("Location: ../users.php"); 
+                header("Location: ../all-pharmacy.php"); 
     
             }
             else{
                 $_SESSION['status']="something went wrong";
-                header("Location: ../users.php");
+                header("Location: ../all-pharmacy.php");
             }
     
         }

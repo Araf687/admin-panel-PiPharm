@@ -4,71 +4,69 @@ include "../config/dbConn.php";
 if ( isset( $_COOKIE['login_status'] ) ) {
     if ( isset( $_POST['addAdmin'] ) ) {
 
-        // user_name	user_email	user_type	user_pass
-        $user_firstName = $_POST['firstName'];
-        $user_lastName = $_POST['lastName'];
-        $user_email = $_POST['emailAddr'];
+        // get admin information
+        $admin_firstName = $_POST['firstName'];
+        $admin_lastName = $_POST['lastName'];
+        $admin_email = $_POST['emailAddr'];
+        $admin_img = $_FILES['admin_img']['name'];
+        $admin_pass = $_POST['pass'];
 
-        $user_pass = $_POST['pass'];
-        $user_pass = password_hash($user_pass, PASSWORD_DEFAULT);
-
+        // image 
+        $filename = '';
+        if ( $admin_img != '' ) {
+            $allowed_extension = array( 'png', 'jpg', 'jpeg' );
+            $file_extension = pathinfo( $admin_img, PATHINFO_EXTENSION );
+            $filename = time() . '.' . $file_extension;
+        }
         
         $phone = $_POST['phone'];
-        $user_confirm_pass = $_POST['confirm_pass'];
-        $admin_id = $_SESSION['loginInfo']["id"];
-        settype( $admin_id, "integer" );
+        $admin_confirm_pass = $_POST['confirm_pass'];
 
-        $noOfAddress = $_POST['noOfAddress'];
-        settype( $noOfAddress, "integer" );
-        $i = 1;
+        // echo  $admin_pass ." - ". $admin_confirm_pass." - ".$admin_img ;
 
-        if ( $user_pass == $user_confirm_pass ) {
-            $caheckRedundantUser = "SELECT id FROM user WHERE `user_email`='$user_email'";
-            $caheckUser_run = mysqli_query( $conn, $caheckRedundantUser );
+        if ( $admin_pass == $admin_confirm_pass ) {
 
-            if ( mysqli_num_rows( $caheckUser_run ) > 0 ) {
-                $_SESSION['status'] = "User exist";
-                header( "Location: ../add-user.php" );
+       
+            $admin_pass = password_hash($admin_pass, PASSWORD_DEFAULT);
+
+            $checkRedundantAdmin = "SELECT id FROM admin WHERE `admin_email`='$admin_email'";
+            $checkAdmin_run = mysqli_query( $conn, $checkRedundantAdmin );
+
+
+
+            if ( mysqli_num_rows( $checkAdmin_run ) > 0 ) {
+                $_SESSION['status'] = "Admin exist";
+                header( "Location: ../add-admin.php" );
             } else {
-                $user_pass = password_hash( $user_pass, PASSWORD_DEFAULT );
-                $addUser_querry = "INSERT INTO user (`first_name`, `last_name`, `user_email`, `user_phone`, `user_type`, `user_pass`,`admin_id`) VALUES ('$user_firstName','$user_lastName','$user_email','$phone','','$user_pass',$admin_id)";
-                $run_addUserQuerry = mysqli_query( $conn, $addUser_querry );
+                $admin_pass = password_hash( $admin_pass, PASSWORD_DEFAULT );
+                $addAdmin_querry = "INSERT INTO admin (`first_name`, `last_name`, `admin_email`, `phone`, `admin_img`, `admin_type`, `admin_pass`) VALUES ('$admin_firstName','$admin_lastName','$admin_email', '$phone', '$filename', '','$admin_pass')";
+                $run_addAdminQuerry = mysqli_query( $conn, $addAdmin_querry );
 
-                if ( $run_addUserQuerry ) {
-                    $user_id = mysqli_insert_id( $conn );
-                    settype( $user_id, "integer" );
-                    for ( $i = 1; $i <= $noOfAddress; $i++ ) {
-                        if ( isset( $_POST["addr$i" . "_main"] ) ) {
-                            $mainAddr = $_POST["addr$i" . "_main"];
-                            $country = $_POST["addr$i" . "_country"];
-                            $city = $_POST["addr$i" . "_city"];
-                            $state = $_POST["addr$i" . "_state"];
-                            $zipCode = $_POST["addr$i" . "_zip"];
-                            $addUserAddress_querry = "INSERT INTO user_address (`user_id`, `admin_id`, `address`, `city`, `state`, `country`, `zip_code`) VALUES ($user_id,$admin_id,'$mainAddr', '$city','$state', '$country', '$zipCode')";
+                if ( $run_addAdminQuerry ) {
 
-                            $run_addUserAddrQuerry = mysqli_query( $conn, $addUserAddress_querry );
-                            if ( $run_addUserAddrQuerry ) {
-                                $_SESSION['status'] = "added";
-                            }
-                        }
+                    if ( $filename != '' ) {
+                        move_uploaded_file( $_FILES['admin_img']['tmp_name'], '../assets/images/admins/' . $filename );
                     }
-                    header( "Location: ../add-user.php" );
+
+                    $_SESSION['status'] = "added";
+                    header( "Location: ../all-admin.php" );  
+                        
                 } else {
-                    $_SESSION['status'] = "something went wrong";
-                    header( "Location: ../add-user.php" );
+                    $_SESSION['status'] = "wrong";
+                    header( "Location: ../add-admin.php" );
                 }
             }
         } else {
             $_SESSION['status'] = "password does not match";
-            header( "Location: ../add-user.php" );
+            header( "Location: ../add-admin.php" );
         }
     } else if ( isset( $_POST['UpdateUser'] ) ) {
         $user_id = $_POST['user_id'];
-        $user_firstName = $_POST['firstName'];
-        $user_lastName = $_POST['lastName'];
-        $user_email = $_POST['emailAddr'];
-        $user_pass = $_POST['pass'];
-        $user_confirm_pass = $_POST['confirm_pass'];
+        $admin_firstName = $_POST['firstName'];
+        $admin_lastName = $_POST['lastName'];
+        $admin_email = $_POST['emailAddr'];
+        $admin_pass = $_POST['pass'];
+        $admin_confirm_pass = $_POST['confirm_pass'];
         $admin_id = $_SESSION['loginInfo']["id"];
         settype( $admin_id, "integer" );
 
@@ -77,8 +75,8 @@ if ( isset( $_COOKIE['login_status'] ) ) {
         $noOfAddress = $_POST['noOfAddress'];
         settype( $noOfAddress, "integer" );
 
-        if ( $user_pass == $user_confirm_pass ) {
-            $updateUser_querry = "UPDATE user SET `first_name`='$user_firstName', `last_name`='$user_lastName',`user_email`='$user_email', `user_pass`='user_pass' WHERE `id`=$user_id";
+        if ( $admin_pass == $admin_confirm_pass ) {
+            $updateUser_querry = "UPDATE user SET `first_name`='$admin_firstName', `last_name`='$admin_lastName',`admin_email`='$admin_email', `admin_pass`='admin_pass' WHERE `id`=$user_id";
             ;
 
             $run_updateUserQuerry = mysqli_query( $conn, $updateUser_querry );

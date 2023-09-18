@@ -12,6 +12,22 @@ if ( isset( $_SESSION['status'] ) ) {
       );
       </script>";
     }
+    else if ( $_SESSION['status'] == "Admin exist" ) {
+        echo "<script>Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Admin already exist!',
+          })
+      </script>";
+    }
+    else if ( $_SESSION['status'] == "wrong" ) {
+        echo "<script>Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          })
+      </script>";
+    }
     unset( $_SESSION['status'] );
 }
 ?>
@@ -47,7 +63,7 @@ if ( isset( $_SESSION['status'] ) ) {
                         <div class="col-12">
                             <div class="row">
                                 <div class="col-sm-8 m-auto">
-                                    <form action="querryCode/userCode.php" method="POST"
+                                    <form action="querryCode/adminCode.php" method="POST" enctype="multipart/form-data"
                                         class="theme-form theme-form-2 mega-form">
                                         <div class="card">
                                             <div class="card-body">
@@ -64,7 +80,7 @@ if ( isset( $_SESSION['status'] ) ) {
                                                             Photo</label>
                                                         <div class="col-md-5 col-lg-5">
                                                             <input class="form-control form-choose"
-                                                                onChange="handleChangeFile(event)" name="img"
+                                                                onChange="handleChangeFile(event)" name="admin_img"
                                                                 type="file" id="formFileMultiple">
                                                         </div>
                                                         <div class="col-md-4 col-lg-4">
@@ -129,7 +145,7 @@ if ( isset( $_SESSION['status'] ) ) {
 
                                         <button name="addAdmin" type="submit"
                                             class="btn ms-auto theme-bg-color my-2 text-white"
-                                            style="margin-right:20px;">Add User</button>
+                                            style="margin-right:20px;">Add Admin</button>
                                     </form>
                                 </div>
                             </div>
