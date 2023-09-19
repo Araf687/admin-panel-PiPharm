@@ -2,6 +2,15 @@
 include 'config/session.php';
 include 'config/dbConn.php';
 ?>
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<?php include( 'includes/head.php' );
+?>
+
+<body>
+
 <?php
 if ( isset( $_SESSION['status'] ) ) {
     if ( $_SESSION['status'] == "added" ) {
@@ -12,16 +21,33 @@ if ( isset( $_SESSION['status'] ) ) {
       );
       </script>";
     }
+    else if ( $_SESSION['status'] == "password does not match" ) {
+        echo "<script>Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+        })
+      </script>";
+    }
+    else if ( $_SESSION['status'] == "wrong" ) {
+        echo "<script>Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+        })
+      </script>";
+    }
+    else if ( $_SESSION['status'] == "Pharmacy exist" ) {
+        echo "<script>Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Email already exist!',
+        })
+      </script>";
+    }
     unset( $_SESSION['status'] );
 }
 ?>
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-
-<?php include( 'includes/head.php' );
-?>
-
-<body>
 
   <!-- tap on top start -->
   <div class="tap-top">
@@ -47,7 +73,7 @@ if ( isset( $_SESSION['status'] ) ) {
             <div class="col-12">
               <div class="row">
                 <div class="col-sm-8 m-auto">
-                  <form action="querryCode/userCode.php" method="POST" class="theme-form theme-form-2 mega-form">
+                  <form action="querryCode/pharmacy-code.php" method="POST" class="theme-form theme-form-2 mega-form">
                     <div class="card">
                       <div class="card-body">
                         <div class="title-header option-title">
@@ -55,7 +81,7 @@ if ( isset( $_SESSION['status'] ) ) {
                         </div>
 
                         <div class="card-header-1">
-                          <h5>Pharmacy Information</h5>
+                          <h5>Pharmacy Admin Information</h5>
                         </div>
                         <div class="row">
                           <div class="mb-4 row align-items-center">
@@ -103,7 +129,7 @@ if ( isset( $_SESSION['status'] ) ) {
                         </div>
                       </div>
                     </div>
-                    <button name="addUser" type="submit" class="btn ms-auto theme-bg-color my-2 text-white" style="margin-right:20px;">Add User</button>
+                    <button name="addPharmacy" type="submit" class="btn ms-auto theme-bg-color my-2 text-white" style="margin-right:20px;">Add User</button>
                   </form>
                 </div>
               </div>

@@ -222,8 +222,12 @@
       window.location = "querryCode/productCode.php?del_id=" + del_id;
     } else if (tableName == "order") {
       window.location = "querryCode/orderCode.php?del_id=" + del_id;
-    } else if (tableName == "slider") {
+    } 
+    else if (tableName == "slider") {
       window.location = "querryCode/slideCode.php?del_id=" + del_id;
+    }
+    else if (tableName == "Pharmacy_admin") {
+      window.location = "querryCode/pharmacy-code.php?del_id=" + del_id;
     }
     sessionStorage.removeItem("tableName");
     sessionStorage.removeItem("del_id");

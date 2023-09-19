@@ -2,26 +2,7 @@
 include 'config/session.php';
 include 'config/dbConn.php';
 
-if ( isset( $_SESSION['status'] ) ) {
 
-    if ( $_SESSION['status'] == "updated" ) {
-        echo "<script>Swal.fire(
-              'Great!',
-              'User Updated Successfully!',
-              'success'
-          );
-          </script>";
-    }
-    if ( $_SESSION['status'] == "Deleted Successfully" ) {
-        echo "<script>Swal.fire(
-              'Great!',
-              'User Deleted Successfully!',
-              'success'
-          );
-          </script>";
-    }
-    unset( $_SESSION['status'] );
-}
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -30,6 +11,44 @@ if ( isset( $_SESSION['status'] ) ) {
 ?>
 
 <body>
+  <?php
+  if ( isset( $_SESSION['status'] ) ) {
+
+    if ( $_SESSION['status'] == "updated" ) {
+      echo "<script>Swal.fire(
+        'Great!',
+        'User Updated Successfully!',
+        'success'
+    );
+    </script>";
+  }
+  else if ( $_SESSION['status'] == "password does not match" ) {
+      echo "<script>Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      })
+    </script>";
+  }
+  else if ( $_SESSION['status'] == "wrong" ) {
+      echo "<script>Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      })
+    </script>";
+  }
+      else if ( $_SESSION['status'] == "Deleted Successfully" ) {
+          echo "<script>Swal.fire(
+                'Great!',
+                'User Deleted Successfully!',
+                'success'
+            );
+            </script>";
+      }
+      unset( $_SESSION['status'] );
+  }
+  ?>
 
   <!-- tap on top start -->
   <div class="tap-top">
@@ -79,7 +98,7 @@ if ( isset( $_SESSION['status'] ) ) {
 $admin_id = $_SESSION['loginInfo']["id"];
 settype( $admin_id, "integer" );
 
-$fetchUserQuerry = "SELECT * FROM user WHERE `admin_id`=$admin_id";
+$fetchUserQuerry = "SELECT * FROM pharmacy_admin WHERE `created_by`=$admin_id";
 $querry_result = mysqli_query( $conn, $fetchUserQuerry );
 
 if ( $querry_result == true ) {
@@ -90,29 +109,29 @@ if ( $querry_result == true ) {
         echo "<tbody>";
         while( $rows = mysqli_fetch_assoc( $querry_result ) ) {
 
-            // user_name	user_email	user_type	user_pass
-            $user_id = $rows['id'];
-            $user_firstName = $rows['first_name'];
-            $user_lastName = $rows['last_name'];
-            $user_email = $rows['user_email'];
+            // user_name	pharmacy_email	user_type	user_pass
+            $pharmacy_id = $rows['id'];
+            $pharmacy_firstName = $rows['first_name'];
+            $pharmacy_lastName = $rows['last_name'];
+            $pharmacy_email = $rows['admin_email'];
             // $user_type = $rows['user_type'];
 
             ?>
                         <tr>
-                          <td class="text-center"><?php echo $user_firstName." ".$user_lastName; ?></td>
+                          <td class="text-center"><?php echo $pharmacy_firstName." ".$pharmacy_lastName; ?></td>
 
-                          <td><?php echo $user_email; ?></td>
+                          <td><?php echo $pharmacy_email; ?></td>
 
                           <td>
                             <ul>
                               <li>
-                                <a href="<?php echo "edit-user.php?user_id=".$user_id?>">
+                                <a href="<?php echo "edit-pharmacy.php?pharmacy_id=".$pharmacy_id?>">
                                   <i class="ri-pencil-line"></i>
                                 </a>
                               </li>
 
                               <li>
-                                <a href="javascript:void(0)" onClick="<?php echo "del_user( ".$user_id." )"; ?>" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
+                                <a href="javascript:void(0)" onClick="<?php echo "del_user( ".$pharmacy_id." )"; ?>" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
                                   <i class="ri-delete-bin-line"></i>
                                 </a>
                               </li>
@@ -130,10 +149,10 @@ if ( $querry_result == true ) {
         </div>
         <!-- All User Table Ends-->
         <script>
-          const del_user = (userId) => {
-            console.log(userId);
-            sessionStorage.setItem("tableName", "user");
-            sessionStorage.setItem("del_id", userId);
+          const del_user = (pharmacyId) => {
+            console.log(pharmacyId);
+            sessionStorage.setItem("tableName", "Pharmacy_admin");
+            sessionStorage.setItem("del_id", pharmacyId);
 
           }
 

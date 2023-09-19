@@ -1,9 +1,6 @@
 <?php
 include 'config/session.php';
 include 'config/dbConn.php';
-
-echo $_SESSION['status'];
-
 if ( isset( $_SESSION['status'] ) ) {
 
     if ( $_SESSION['status'] == "updated" ) {
