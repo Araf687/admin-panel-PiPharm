@@ -79,7 +79,7 @@ include('includes/head.php');
                                   }
                     
                         settype($user_id,"integer");  
-                        $fetchCatQuerry="SELECT * FROM category WHERE `admin_id`=$user_id";
+                        $fetchCatQuerry="SELECT * FROM category";
                         $querry_result=mysqli_query($conn,$fetchCatQuerry);
 
                         if($querry_result==true){

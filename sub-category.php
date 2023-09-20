@@ -44,7 +44,7 @@ if(isset($_SESSION['status']))
               <div class="card card-table">
                 <div class="card-body">
                   <div class="title-header option-title">
-                    <h5>All Category</h5>
+                    <h5>All Sub Category</h5>
                     <form class="d-inline-flex">
                       <a href="add-sub-category.php" class="align-items-center btn btn-theme d-flex">
                         <i data-feather="plus-square"></i>Add New
@@ -57,7 +57,7 @@ if(isset($_SESSION['status']))
                       <table class="table all-package theme-table" id="table_id">
                         <thead>
                           <tr>
-                            <th>Category Name</th>
+                            <th>Sub Category Name</th>
                             <th>Product Image</th>
                             <th>Slug</th>
                             <th>Option</th>

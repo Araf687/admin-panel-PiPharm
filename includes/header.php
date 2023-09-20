@@ -66,11 +66,12 @@
             <div class="media profile-media">
               <?php 
                 $admin_img= "assets/images/admins/1676717087.png";
-                if(isset($_SESSION['loginInfo']['adminImg'])){
-                  $admin_img ="assets/images/admins/".$_SESSION['loginInfo']['adminImg'];
+                $isPharmacyAdmin=$_SESSION['loginInfo']['adminType']==="pharmacy";
+                if(isset($_SESSION['loginInfo']['adminImg']) && $_SESSION['loginInfo']['adminImg']){
+                  $admin_img =$isPharmacyAdmin?"assets/images/pharmacy_admins/".$_SESSION['loginInfo']['adminImg']:"assets/images/admins/".$_SESSION['loginInfo']['adminImg'];
                 }
               ?>
-              <img class="user-profile rounded-circle" src="<?php echo $admin_img ?>" alt="">
+              <img class="user-profile rounded-circle" src="<?=$admin_img?>" alt="">
               <div class="user-name-hide media-body">
                 <span><?php echo $_SESSION['loginInfo']['firstName'] .' '. $_SESSION['loginInfo']['lastName']; ?></span>
                 <p class="mb-0 font-roboto"><?=$_SESSION['loginInfo']['adminType']=="admin"?"Admin":"Pharmacy" ?><i class="middle ri-arrow-down-s-line"></i></p>

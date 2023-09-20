@@ -48,10 +48,8 @@ if ( isset( $_POST['loginBTN'] ) ) {
         }
 
     } else {
-
-    
         $_SESSION['status'] = "Failed to log in";
-        // header( "Location: ../login.php" );
+        header( "Location: ../login.php" );
 
     }
 }

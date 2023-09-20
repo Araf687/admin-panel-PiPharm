@@ -46,32 +46,51 @@ if ( isset( $_COOKIE['login_status'] ) ) {
         $pharmacy_firstname = $_POST['firstName'];
         $pharmacy_lastName = $_POST['lastName'];
         $admin_email = $_POST['emailAddr'];
-        $pharmacy_phone=$POST["phone"];
+        $pharmacy_phone=$_POST["phone"];
         $pharmacy_pass = $_POST['pass'];
-        $pharmacy_confirm_pass = $_POST['confirm_pass']?$_POST['confirm_pass']:$_POST['pass'];
+        $pharmacy_confirm_pass = isset($_POST['confirm_pass']) && $_POST['confirm_pass']?$_POST['confirm_pass']:$_POST['pass'];
+
+        $pharmacy_admin_img = isset($_FILES['admin_img']['name']) && $_FILES['admin_img']['name'] != ''?$_FILES['admin_img']['name']:null;
 
         $admin_id = $_SESSION['loginInfo']["id"];
        
         settype( $admin_id, "integer" );
 
         settype( $pharmacy_id, "integer" );
+        
+
+         // image 
+         $filename = '';
+         if ( $pharmacy_admin_img ) {
+             $allowed_extension = array( 'png', 'jpg', 'jpeg' );
+             $file_extension = pathinfo( $pharmacy_admin_img, PATHINFO_EXTENSION );
+             $filename = time() . '.' . $file_extension;
+         }
 
         if ( $pharmacy_pass == $pharmacy_confirm_pass ) {
-            $updatePharmacy_querry = "UPDATE pharmacy_admin SET `first_name`='$pharmacy_firstname', `last_name`='$pharmacy_lastName',`admin_email`='$admin_email',`admin_phone`='$pharmacy_phone', `admin_pass`='$pharmacy_pass' WHERE `id`=$pharmacy_id";
+            $query1= "UPDATE pharmacy_admin SET `first_name`='$pharmacy_firstname', `last_name`='$pharmacy_lastName',`admin_email`='$admin_email',`admin_phone`='$pharmacy_phone', `admin_pass`='$pharmacy_pass' WHERE `id`=$pharmacy_id";
+
+            $query2= "UPDATE pharmacy_admin SET `first_name`='$pharmacy_firstname', `last_name`='$pharmacy_lastName',`admin_email`='$admin_email',`admin_phone`='$pharmacy_phone', `admin_pass`='$pharmacy_pass',`admin_img`='$filename' WHERE `id`=$pharmacy_id";
+
+            $updatePharmacy_querry =$pharmacy_admin_img ?$query2:$query1;
 
             $run_updateUserQuerry = mysqli_query( $conn, $updatePharmacy_querry );
             if ( $run_updateUserQuerry ) {
 
+                if ( $filename != '' ) {
+                    move_uploaded_file( $_FILES['admin_img']['tmp_name'], '../assets/images/pharmacy_admins/' . $filename );
+                }
+
                 $_SESSION['status'] = "updated";
-                header( "Location: ../all-pharmacy.php" );
+                header( $pharmacy_admin_img?"Location: ../setting.php":"Location: ../all-pharmacy.php" );
 
             } else {
                 $_SESSION['status'] = "wrong";
-                header( "Location: ../all-pharmacy.php" );
+                header( $pharmacy_admin_img?"Location: ../setting.php":"Location: ../all-pharmacy.php" );
             }
         } else {
             $_SESSION['status'] = "password does not match";
-            header( "Location: ../all-pharmacy.php" );
+            header( $pharmacy_admin_img?"Location: ../setting.php":"Location: ../all-pharmacy.php" );
         }
 
     } else if ( isset( $_GET['del_id'] ) ) {

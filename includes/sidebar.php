@@ -55,7 +55,9 @@ $admin=$_SESSION['loginInfo']["adminType"]=="admin";
             </ul>
           </li> 
 
-          <li class="sidebar-list" style=<?=$admin?"display:none":"display:block"?>>
+          <li class="sidebar-list" 
+          style=<?=$admin?"display:none":"display:block"?>
+          >
             <a class="linear-icon-link sidebar-link sidebar-title"  href="javascript:void(0)">
               <i class="ri-store-3-line"></i>
               <span>Product</span>
@@ -71,8 +73,10 @@ $admin=$_SESSION['loginInfo']["adminType"]=="admin";
             </ul>
           </li>
 
-          <li class="sidebar-list">
-            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+          <li class="sidebar-list"
+          style=<?=!$admin?"display:none":"display:block"?>
+          >
+            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)" >
               <i class="ri-list-check-2"></i>
               <span>Category</span>
             </a>
@@ -103,7 +107,9 @@ $admin=$_SESSION['loginInfo']["adminType"]=="admin";
             </ul>
           </li>
 
-          <li class="sidebar-list">
+          <li class="sidebar-list"
+          style=<?=!$admin?"display:none":"display:block"?>
+          >
                 <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                   <i class="ri-user-3-line"></i>
                   <span>Pharmacy Admin</span>
@@ -121,7 +127,9 @@ $admin=$_SESSION['loginInfo']["adminType"]=="admin";
 
 
           
-              <li class="sidebar-list">
+              <li class="sidebar-list"
+              style=<?=!$admin?"display:none":"display:block"?>
+              >
                 <a class="sidebar-link sidebar-title"  href="javascript:void(0)">
                   <i class="ri-admin-line"></i>
                   <span>Admin</span>
