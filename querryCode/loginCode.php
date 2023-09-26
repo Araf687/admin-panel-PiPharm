@@ -8,10 +8,12 @@ if ( isset( $_POST['loginBTN'] ) ) {
     $login_pass = $_POST['pass'];
     $loginType=$_POST['loginType'];
 
-    $login_querry = $loginType=="authority"?"SELECT * FROM admin WHERE admin_email='$email_id' LIMIT 1":"SELECT * FROM pharmacy_admin WHERE admin_email='$email_id' LIMIT 1";
+    $login_querry = $loginType=="authority"?
+    "SELECT * FROM admin WHERE admin_email='$email_id' LIMIT 1"
+    :
+    "SELECT * FROM pharmacy_admin WHERE admin_email='$email_id' LIMIT 1";
+    
     $run_loginQuerry = mysqli_query( $conn, $login_querry );
-
- 
  
 
     if ( mysqli_num_rows($run_loginQuerry) == 1 ) {
@@ -21,6 +23,7 @@ if ( isset( $_POST['loginBTN'] ) ) {
         // echo $row['admin_pass']."-----------------".$login_pass;
 
         if (password_verify($login_pass, $row['admin_pass']) ) {
+            
             $_SESSION['loginInfo'] = array(
                 "id"=>$row['id'],
                 "firstName"=>$row['first_name'],

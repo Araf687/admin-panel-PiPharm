@@ -177,8 +177,7 @@ if ( isset( $_SESSION['status'] ) ) {
     </div>
     <!-- page-wrapper End-->
 
-    <?php include( 'includes/scripts.php' );
-?>
+    <?php include( 'includes/scripts.php' );?>
 </body>
 
 </html>

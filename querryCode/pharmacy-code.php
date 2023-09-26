@@ -22,13 +22,26 @@ if ( isset( $_COOKIE['login_status'] ) ) {
             } else {
                 $pharmacy_pass = password_hash( $pharmacy_pass, PASSWORD_DEFAULT );
                 
-                $addpharmacy_querry = "INSERT INTO pharmacy_admin (`first_name`, `last_name`, `admin_email`, `admin_phone`,`admin_pass`, `admin_type`,`admin_img` ,`shop_name`,`shop_image`,`status`,`created_by`) VALUES ('$pharmacy_firstname','$pharmacy_lastName','$admin_email','$phone','$pharmacy_pass','pharmacy',' ',' ',' ','active',$admin_id)";
+                $addpharmacy_querry = "INSERT INTO pharmacy_admin 
+                (`first_name`, `last_name`, `admin_email`, `admin_phone`,`admin_pass`, `admin_type`,`admin_img` ,`shop_name`,`shop_image`,`brand_logo`,`status`,`created_by`)
+                 VALUES ('$pharmacy_firstname','$pharmacy_lastName','$admin_email','$phone','$pharmacy_pass','pharmacy',' ',' ',' ',' ','active',$admin_id)";
 
                 $run_addPharmacyQuerry = mysqli_query( $conn, $addpharmacy_querry ); 
 
                 if($run_addPharmacyQuerry){
-                    $_SESSION['status'] = "added";
-                    header( "Location: ../add-pharmacy.php" );
+                    $inserted_pharmacy_id = $conn->insert_id;
+                    $addAddressQuery="INSERT INTO pharmacy_address (`pharmacy_id`,`address`,`country`,`zip_code`,`state`,`city`) VALUES ($inserted_pharmacy_id,' ',' ',' ',' ',' ')";
+
+                    $run_addAddressQuerry = mysqli_query( $conn, $addAddressQuery );
+
+                    if($run_addAddressQuerry){
+                        $_SESSION['status'] = "added";
+                        header( "Location: ../add-pharmacy.php" );
+                    }
+                    else{
+                        $_SESSION['status'] = "wrong address";
+                        header( "Location: ../add-pharmacy.php" );
+                    }
                 }
                 else{
                     $_SESSION['status'] = "wrong";
@@ -66,7 +79,7 @@ if ( isset( $_COOKIE['login_status'] ) ) {
              $file_extension = pathinfo( $pharmacy_admin_img, PATHINFO_EXTENSION );
              $filename = time() . '.' . $file_extension;
          }
-
+        
         if ( $pharmacy_pass == $pharmacy_confirm_pass ) {
             $query1= "UPDATE pharmacy_admin SET `first_name`='$pharmacy_firstname', `last_name`='$pharmacy_lastName',`admin_email`='$admin_email',`admin_phone`='$pharmacy_phone', `admin_pass`='$pharmacy_pass' WHERE `id`=$pharmacy_id";
 
@@ -94,11 +107,21 @@ if ( isset( $_COOKIE['login_status'] ) ) {
         }
 
     } else if ( isset( $_GET['del_id'] ) ) {
+        echo "as";
         $pharmacy_id = $_GET['del_id'];
         settype( $pharmacy_id, "integer" );
         $delPharmacy_querry = "DELETE FROM pharmacy_admin WHERE id=$pharmacy_id";
         $run_delPharmacyQuerry = mysqli_query( $conn, $delPharmacy_querry );
         if ( $run_delPharmacyQuerry == true ) {
+
+            // $delPharmacyAddress_querry = "DELETE FROM pharmacy_address WHERE id=$pharmacy_id";
+            // $run_delPharmacyAddressQuerry = mysqli_query( $conn, $delPharmacyAddress_querry );
+
+            // if($run_delPharmacyAddressQuerry){
+
+            // }
+
+
             $_SESSION['status'] = "Deleted Successfully";
             header( "Location: ../all-pharmacy.php" );
 

@@ -125,7 +125,6 @@ $admin=$_SESSION['loginInfo']["adminType"]=="admin";
               </li>
 
 
-
           
               <li class="sidebar-list"
               style=<?=!$admin?"display:none":"display:block"?>
