@@ -16,6 +16,7 @@ if ( isset( $_COOKIE['login_status'] ) ) {
         $store_banner = $_FILES['store_banner']['name'];
 
         $allowed_extension = array( 'png', 'jpg', 'jpeg' );
+
         $logo_file_extension = pathinfo( $store_logo, PATHINFO_EXTENSION );
         $banner_file_extension = pathinfo( $store_banner, PATHINFO_EXTENSION );
 
@@ -28,34 +29,48 @@ if ( isset( $_COOKIE['login_status'] ) ) {
         $country = $_POST['addr_country'];
         $zipCode = $_POST['addr_zip'];
 
+        $updatePharmacy='';
 
-        $updatePharmacy = "UPDATE pharmacy_admin SET `shop_name`='$store_name', `shop_image`='$banner_filename', `brand_logo`='$logo_filename' WHERE `id`=$store_id";
+        if(isset($_FILES['store_logo']) && isset($_FILES['store_banner'])){
+            $updatePharmacy = "UPDATE pharmacy_admin SET `shop_name`='$store_name', `shop_image`='$banner_filename', `brand_logo`='$logo_filename' WHERE `id`=$store_id";
+        }
+        else if(isset($_FILES['store_logo'])){
+            $updatePharmacy = "UPDATE pharmacy_admin SET `shop_name`='$store_name', `brand_logo`='$logo_filename' WHERE `id`=$store_id";
 
+        }
+        else if(isset($_FILES['store_banner'])){
+            $updatePharmacy = "UPDATE pharmacy_admin SET `shop_name`='$store_name', `shop_image`='$banner_filename'  WHERE `id`=$store_id";
+        }
+       
         $updatePharmacyAddress = "UPDATE pharmacy_address SET `address`='$address',`country`='$country', `zip_code`='$zipCode',`state`='$state',`city`='$city' WHERE `pharmacy_id`=$store_id";
 
         $run_updateStorequery = mysqli_query( $conn, $updatePharmacy );
 
-        echo $updatePharmacyAddress."    ".$updatePharmacy ;
-        // if ( $run_updateStorequery ) {
+        if ( $run_updateStorequery ) {
 
-        //     if(!isset( $_POST['UpdateStore'] )){
-        //         move_uploaded_file( $_FILES['store_logo']['tmp_name'], '../assets/images/store/logo/' . $logo_filename );
+            if(isset($_FILES['store_logo'])){
 
-        //         move_uploaded_file( $_FILES['store_banner']['tmp_name'], '../assets/images/store/banner/' . $banner_filename );
-        //     }
+                move_uploaded_file( $_FILES['store_logo']['tmp_name'], '../assets/images/store/logo/' . $logo_filename );
 
-        //     $run_updatePharmacyAddress = mysqli_query( $conn, $updatePharmacyAddress );
+            }
+           if(isset($_FILES['store_banner'])){
 
-        //     if($run_updatePharmacyAddress){
+                move_uploaded_file( $_FILES['store_banner']['tmp_name'], '../assets/images/store/banner/' . $banner_filename );
+                
+            }
 
-        //         $_SESSION['status'] = "Added Successfully";
-        //         header( "Location: ../store-setting.php" );
+            $run_updatePharmacyAddress = mysqli_query( $conn, $updatePharmacyAddress );
 
-        //     }
-        // } else {
-        //     $_SESSION['status'] = "something went wrong";
-        //     header( "Location: ../store-setting.php" );
-        // }
+            if($run_updatePharmacyAddress){
+
+                $_SESSION['status'] = "Added Successfully";
+                header( "Location: ../store-setting.php" );
+
+            }
+        } else {
+            $_SESSION['status'] = "something went wrong";
+            header( "Location: ../store-setting.php" );
+        }
 
     }
     //  else if ( isset( $_POST['UpdateStore'] ) ) {
