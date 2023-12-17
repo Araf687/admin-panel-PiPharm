@@ -64,7 +64,7 @@ if(isset($_SESSION['status']))
                                                     </tr>
                                                 </thead>
 
-                                                <tbody>
+                             <tbody>
 
                            <?php 
                            
@@ -76,7 +76,7 @@ if(isset($_SESSION['status']))
                             $slNo=1;
 
                             if( $count>0){
-                                echo "<tbody>";
+                                
                                 while($rows=mysqli_fetch_assoc($querry_result)){
                                   $cat_id=$rows['id'];
                                   $cat_name=$rows['cat_name'];

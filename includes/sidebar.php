@@ -74,7 +74,7 @@ $admin=$_SESSION['loginInfo']["adminType"]=="admin";
           </li>
 
           <li class="sidebar-list"
-          style=<?=!$admin?"display:none":"display:block"?>
+          style=<?=$admin?"display:block":"display:none"?>
           >
             <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)" >
               <i class="ri-list-check-2"></i>

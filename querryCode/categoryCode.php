@@ -66,6 +66,7 @@ if ( isset( $_COOKIE['login_status'] ) ) {
             $file_extension = pathinfo( $cat_image, PATHINFO_EXTENSION );
             $filename = time() . '.' . $file_extension;
             move_uploaded_file( $_FILES['cat_image']['tmp_name'], '../assets/images/categories/' . $filename );
+            
             $updateCat_querry = "UPDATE category SET `cat_name`='$cat_name',`cat_image`='$filename', `is_featured`=$isFeatured WHERE `id`=$cat_id";
             ;
         }

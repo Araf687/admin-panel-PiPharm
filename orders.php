@@ -61,7 +61,7 @@ if ( isset( $_SESSION['loginInfo']["id"] ) ) {
 
 settype( $admin_id, "integer" );
 
-$fetchPrdQuery = "SELECT * FROM orders WHERE `admin_id`=$admin_id";
+$fetchPrdQuery = "SELECT * FROM orders WHERE `pharmacy_id`=$admin_id";
 
 $query_result = mysqli_query( $conn, $fetchPrdQuery );
 
