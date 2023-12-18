@@ -1,6 +1,6 @@
 
 <?php 
-session_start();
+
 $adminType=$_SESSION['loginInfo']["adminType"];
 $admin=$_SESSION['loginInfo']["adminType"]=="admin";
 ?>

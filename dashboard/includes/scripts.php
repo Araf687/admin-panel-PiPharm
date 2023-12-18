@@ -1,5 +1,6 @@
 <!-- Modal Start -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog  modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body">
@@ -33,11 +34,13 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-animation btn-md fw-bold" data-bs-dismiss="modal">No</button>
-        <button type="button" class="btn btn-animation btn-md fw-bold" onClick="confirmDel()" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Yes</button>
+        <button type="button" class="btn btn-animation btn-md fw-bold" onClick="confirmDel()"
+          data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Yes</button>
       </div>
     </div>
   </div>
 </div>
+
 
 <div class="modal fade theme-modal remove-coupon" id="exampleModalToggle2" aria-hidden="true" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
@@ -68,7 +71,8 @@
 <!-- Delete Modal Box End -->
 
 <!-- Offcanvas Box Start -->
-<div class="offcanvas offcanvas-end order-offcanvas" tabindex="-1" id="order-details" aria-labelledby="offcanvasExampleLabel" aria-expanded="false">
+<div class="offcanvas offcanvas-end order-offcanvas" tabindex="-1" id="order-details"
+  aria-labelledby="offcanvasExampleLabel" aria-expanded="false">
   <div class="offcanvas-header">
     <h4 class="offcanvas-title" id="offcanvasExampleLabel">Takeaway #573-685572</h4>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close">
@@ -87,11 +91,13 @@
     <div class="accordion accordion-flush custome-accordion" id="accordionFlushExample">
       <div class="accordion-item">
         <h2 class="accordion-header" id="flush-headingTwo">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
             Order List
           </button>
         </h2>
-        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+          data-bs-parent="#accordionFlushExample">
           <div class="accordion-body">
 
             <div class="table-responsive table-details">
@@ -130,23 +136,28 @@
       </div>
       <div class="accordion-item">
         <h2 class="accordion-header" id="flush-headingThree">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
             Payment Status
           </button>
         </h2>
-        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
+          data-bs-parent="#accordionFlushExample">
           <div class="accordion-body">
-            Pay on Delivery (Cash/Card). Cash on delivery (COD) available. Card/Net banking acceptance subject to device availability.
+            Pay on Delivery (Cash/Card). Cash on delivery (COD) available. Card/Net banking acceptance subject to device
+            availability.
           </div>
         </div>
       </div>
       <div class="accordion-item">
         <h2 class="accordion-header" id="flush-headingOne">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
             Delivery Status
           </button>
         </h2>
-        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+          data-bs-parent="#accordionFlushExample">
           <div class="accordion-body">
 
             <ul class="order-details">
@@ -170,35 +181,35 @@
 
 <!-- js for del data(category, product, attribute) -->
 <script>
-  const confirmDel=()=>{
-    const tableName=sessionStorage.getItem("tableName");
-    const del_id=sessionStorage.getItem("del_id");
-    console.log(tableName,del_id);
-    if(tableName=="category"){
-      window.location="querryCode/categoryCode.php?del_id="+del_id;
+  const confirmDel = () => {
+    const tableName = sessionStorage.getItem("tableName");
+    const del_id = sessionStorage.getItem("del_id");
+    console.log(tableName, del_id);
+    if (tableName == "category") {
+      window.location = "querryCode/categoryCode.php?del_id=" + del_id;
     }
-    if(tableName=="sub_category"){
-      window.location="querryCode/subCategoryCode.php?del_id="+del_id;
+    if (tableName == "sub_category") {
+      window.location = "querryCode/subCategoryCode.php?del_id=" + del_id;
     }
-    else if(tableName=="attribute"){
-      window.location="querryCode/attributeCode.php?del_id="+del_id;
+    else if (tableName == "attribute") {
+      window.location = "querryCode/attributeCode.php?del_id=" + del_id;
     }
-    else if(tableName=="user"){
-      window.location="querryCode/userCode.php?del_id="+del_id;
+    else if (tableName == "user") {
+      window.location = "querryCode/userCode.php?del_id=" + del_id;
     }
-    else if(tableName=="product"){
-      window.location="querryCode/productCode.php?del_id="+del_id;
+    else if (tableName == "product") {
+      window.location = "querryCode/productCode.php?del_id=" + del_id;
     }
-    else if(tableName=="order"){
-      window.location="querryCode/orderCode.php?del_id="+del_id;
+    else if (tableName == "order") {
+      window.location = "querryCode/orderCode.php?del_id=" + del_id;
     }
-    else if(tableName=="slider"){
-      window.location="querryCode/slideCode.php?del_id="+del_id;
+    else if (tableName == "slider") {
+      window.location = "querryCode/slideCode.php?del_id=" + del_id;
     }
     sessionStorage.removeItem("tableName");
     sessionStorage.removeItem("del_id");
   }
-  const logout=()=>{
+  const logout = () => {
     window.open("logout.php");
   }
 </script>

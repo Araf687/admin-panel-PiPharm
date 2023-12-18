@@ -5,7 +5,7 @@ include 'config/dbConn.php';
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
-<?php include( 'includes/head.php' );
+<?php include('includes/head.php');
 ?>
 
 <body>
@@ -17,13 +17,13 @@ include 'config/dbConn.php';
 
   <!-- page-wrapper Start-->
   <div class="page-wrapper compact-wrapper" id="pageWrapper">
-<?php include( 'includes/header.php' );
-?>
+    <?php include('includes/header.php');
+    ?>
 
     <!-- Page Body Start-->
     <div class="page-body-wrapper">
-<?php include( 'includes/sidebar.php' );
-?>
+      <?php include('includes/sidebar.php');
+      ?>
 
       <!-- Order section Start -->
       <div class="page-body">
@@ -52,68 +52,98 @@ include 'config/dbConn.php';
                         </thead>
 
                         <tbody>
-<?php
+                          <?php
+                          $status = '';
+                          $admin_id = 0;
+                          if (isset($_SESSION['loginInfo']["id"])) {
+                            $admin_id = $_SESSION['loginInfo']["id"];
+                          }
 
-$admin_id = 0;
-if ( isset( $_SESSION['loginInfo']["id"] ) ) {
-    $admin_id = $_SESSION['loginInfo']["id"];
-}
+                          settype($admin_id, "integer");
 
-settype( $admin_id, "integer" );
+                          $fetchPrdQuery = "SELECT * FROM orders WHERE `pharmacy_id`=$admin_id";
 
-$fetchPrdQuery = "SELECT * FROM orders WHERE `pharmacy_id`=$admin_id";
+                          $query_result = mysqli_query($conn, $fetchPrdQuery);
 
-$query_result = mysqli_query( $conn, $fetchPrdQuery );
+                          if ($query_result == true) {
+                            $count = mysqli_num_rows($query_result);
+                            $slNo = 1;
+                            if ($count > 0) {
+                              echo "<tbody>";
+                              while ($rows = mysqli_fetch_assoc($query_result)) {
+                                $ord_id = $rows['id'];
+                                $ord_date = $rows['created_date'];
+                                $ord_code = $rows['order_code'];
+                                $amount = $rows['sale_amount'];
+                                $pay_method = $rows['payment_method'];
+                                $status = $rows['delivery_status'];
+                                $orderType = $rows['order_type'];
 
-if ( $query_result == true ) {
-    $count = mysqli_num_rows( $query_result );
-    $slNo = 1;
-    if ( $count>0 ) {
-        echo "<tbody>";
-        while( $rows = mysqli_fetch_assoc( $query_result ) ) {
-            $ord_id = $rows['id'];
-            $ord_date = $rows['created_date'];
-            $ord_code = $rows['order_code'];
-            $amount = $rows['sale_amount'];
-            $pay_method = $rows['payment_method'];
-            $status = $rows['delivery_status'];
-            $orderType = $rows['order_type'];
+                                $exploded_date = explode(" ", $ord_date);
+                                $newDate = date("jS F Y", strtotime($exploded_date[0]));
 
-            $exploded_date = explode( " ", $ord_date );
-            $newDate = date( "jS F Y", strtotime( $exploded_date[0] ) );
+                                ?>
+                                <!-- data-bs-toggle = "offcanvas"  -->
+                                <tr href="#order-details">
+                                  <td>
+                                    <?php echo $ord_code; ?>
+                                  </td>
 
-            ?>
-                          <!-- data-bs-toggle = "offcanvas"  -->
-                          <tr href="#order-details">
-                            <td><?php echo $ord_code; ?></td>
+                                  <td>
+                                    <?php echo $newDate; ?>
+                                  </td>
+                                  <td>
+                                    <?php echo $pay_method; ?>
+                                  </td>
+                                  <td>
+                                    <?php echo $orderType; ?>
+                                  </td>
 
-                            <td><?php echo $newDate; ?></td>
-                            <td><?php echo $pay_method; ?></td>
-                            <td><?php echo $orderType; ?></td>
+                                  <td class="<?php echo "order-" . $status; ?>">
+                                    <span>
+                                      <?php echo $status; ?>
+                                    </span>
+                                  </td>
 
-                            <td class="<?php echo "order-".$status; ?>">
-                              <span><?php echo $status; ?></span>
-                            </td>
+                                  <td>$
+                                    <?php echo $amount; ?>
+                                  </td>
 
-                            <td>$<?php echo $amount; ?></td>
+                                  <td>
+                                    <ul>
+                                      <li>
+                                        <a href="<?php echo "order-detail.php?ord_id=" . $ord_id; ?>">
+                                          <i class="ri-eye-line"></i>
+                                        </a>
 
-                            <td>
-                              <ul>
-                                <li>
-                                  <a href="<?php echo "order-detail.php?ord_id=".$ord_id; ?>">
-                                    <i class="ri-eye-line"></i>
-                                  </a>
-                                </li>
+                                      </li>
+                                      <li>
+                                        <!-- <a href="#">
+                                          <i class="ri-edit-2-line" style="color:#009289;"></i>
+                                        </a> -->
+                                        <!-- Button trigger modal -->
+                                        <a href="javascript:void(0)" data-bs-toggle="modal"
+                                          data-bs-target="#exampleEditOrderModal"
+                                          onclick="setDefaultOrderStatus('<?= $status ?>')">
+                                          <i class="ri-edit-2-line" style="color:#009289;"></i>
+                                        </a>
 
-                                <li>
-                                  <a href="javascript:void(0)" onClick="<?php echo "del_product("."\"$ord_code\"".")"; ?>" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
-                                    <i class="ri-delete-bin-line"></i>
-                                  </a>
-                                </li>
-                              </ul>
-                            </td>
-                          </tr>
-<?php } } } ?>
+                                      </li>
+
+                                      <li>
+                                        <a href="javascript:void(0)"
+                                          onClick="<?php echo "del_product(" . "\"$ord_code\"" . ")"; ?>"
+                                          data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
+                                          <i class="ri-delete-bin-line"></i>
+                                        </a>
+                                      </li>
+
+                                    </ul>
+                                  </td>
+                                </tr>
+                              <?php }
+                            }
+                          } ?>
                         </tbody>
                       </table>
                     </div>
@@ -131,10 +161,15 @@ if ( $query_result == true ) {
             sessionStorage.setItem("del_id", ordId);
 
           }
+          const setDefaultOrderStatus = (status) => {
+            console.log(status, $orderCode)
+            $('#ordStatus').val("pending");
+          }
+
 
         </script>
 
-        <?php include( 'includes/footer.php' );
+        <?php include('includes/footer.php');
         ?>
       </div>
       <!-- index body end -->
@@ -144,8 +179,43 @@ if ( $query_result == true ) {
   </div>
   <!-- page-wrapper End-->
 
-<?php include( 'includes/scripts.php' );
-?>
+  <?php include('includes/scripts.php');
+  ?>
+
+  <!-- Delete Modal Box Start -->
+  <div class="modal fade theme-modal remove-coupon" id="exampleEditOrderModal" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header d-block text-center my-3">
+          <h5 class="modal-title w-100" id="exampleModalLabel22">Change Order Status</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body" style="min-height:120px">
+          <div class="remove-box d-flex justify-content-center">
+            <form action="querryCode/updateOrderStatus.php">
+              <input type="text" value=<?=$ord_id?>>
+              <select class="form-select w-50 " id="ordStatus" aria-label="Default select example"
+                style="border-radius:10px">
+                <option selected>Select Order Status</option>
+                <option value="pending">Pending</option>
+                <option value="Packaging">Packaging</option>
+                <option value="On the Way">On the Way</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </form>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-animation btn-md fw-bold" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-animation btn-md fw-bold" data-bs-target="#exampleModalToggle2"
+            data-bs-toggle="modal" data-bs-dismiss="modal">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

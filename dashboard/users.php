@@ -10,7 +10,6 @@ $fetchPrdQuery="SELECT p.prd_id, p.prd_name, p.prd_image, p.prd_cat_id, p.prd_pr
 
 
 <?php
-      session_start();
       if(isset($_SESSION['status']))
       {
         // echo "<script>console.log(\"".$_SESSION['status']."\")</script>";

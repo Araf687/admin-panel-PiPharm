@@ -2,7 +2,6 @@
 <html lang="en" dir="ltr">
 <?php include('includes/head.php'); ?>
 <?php
-session_start();
 include "config/dbConn.php";
 echo $_SESSION['status']; 
 if(isset($_SESSION['status']))

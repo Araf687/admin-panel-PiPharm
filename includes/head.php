@@ -5,9 +5,11 @@
   <link rel="icon" href="assets/images/favicon.png" type="image/x-icon">
   <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
   <title>Order Management System</title>
-  
+
   <!-- Google font-->
-  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
 
   <!-- Linear Icon css -->
   <link rel="stylesheet" href="assets/css/linearicon.css">
@@ -32,7 +34,12 @@
   <link rel="stylesheet" type="text/css" href="assets/css/vendors/animate.css">
 
   <!-- Bootstrap css-->
-  <link rel="stylesheet" type="text/css" href="assets/css/vendors/bootstrap.css">
+  <!-- <link rel="stylesheet" type="text/css" href="assets/css/vendors/bootstrap.css"> -->
+
+
+  <!-- bootstrap link  -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
   <!-- vector map css -->
   <link rel="stylesheet" type="text/css" href="assets/css/vector-map.css">
@@ -51,14 +58,15 @@
 
   <!-- ajax link -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-  
+
   <style>
     .page-item .page-link {
-      color:#0da487 !important;
+      color: #0da487 !important;
     }
+
     .page-item.active .page-link {
-      color:#fff !important;
-      background-color:#0da487 !important;
+      color: #fff !important;
+      background-color: #0da487 !important;
       border-color: #fff;
     }
   </style>

@@ -5,7 +5,7 @@
 
 <body>
 <?php
-      session_start();
+      
       if(isset($_SESSION['status']))
       {
         // echo "<script>console.log(\"".$_SESSION['status']."\")</script>";
