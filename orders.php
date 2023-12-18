@@ -166,6 +166,56 @@ include 'config/dbConn.php';
             $('#ordStatus').val("pending");
           }
 
+          $(document).ready(function () {
+
+            let request;
+
+            $("#orderStatusForm").submit(function (event) {
+
+              event.preventDefault();
+              if (request) {
+                request.abort();
+              }
+              var $form = $(this);
+              var serializedData = $form.serialize();
+
+              request = $.ajax({
+                url: "php_backend/user/loginCode.php",
+                type: "post",
+                data: serializedData,
+              });
+
+              request.done(function (response, textStatus, jqXHR) {
+                console.log(response);
+                const jsonData = $.parseJSON(response);
+
+                if (jsonData?.isSuccess) {
+                  console.log(jsonData);
+                  Swal.fire({
+                    title: "Good job!",
+                    text: "Logged In Successfully",
+                    icon: "success"
+                  });
+                } else {
+                  Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Failed to Update Status",
+                  });
+                }
+              });
+
+              request.fail(function (jqXHR, textStatus, errorThrown) {
+                console.error("The following error occurred: " + textStatus, errorThrown);
+                Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "Something went wrong!",
+                });
+              });
+              request.always(function () { });
+            });
+          })
 
         </script>
 
@@ -185,9 +235,9 @@ include 'config/dbConn.php';
   <!-- Delete Modal Box Start -->
   <div class="modal fade theme-modal remove-coupon" id="exampleEditOrderModal" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-      
-        <div class="modal-content">
-          <form action="querryCode/updateOrderStatus.php">
+
+      <div class="modal-content">
+        <form id="orderStatusForm">
           <div class="modal-header d-block text-center my-3">
             <h5 class="modal-title w-100" id="exampleModalLabel22">Change Order Status</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
@@ -197,8 +247,9 @@ include 'config/dbConn.php';
           <div class="modal-body" style="min-height:120px">
             <div class="remove-box d-flex justify-content-center">
 
-              <input type="text" value=<?= $ord_id ?> style="display:none">
-              <select class="form-select" id="ordStatus" aria-label="Default select example" style="border-radius:10px">
+              <input type="text" name="order_id" value=<?= $ord_id ?> style="display:none">
+              <select class="form-select" id="ordStatus" name="ordStatus" aria-label="Default select example"
+                style="border-radius:10px">
                 <option selected>Select Order Status</option>
                 <option value="pending">Pending</option>
                 <option value="Packaging">Packaging</option>
@@ -212,11 +263,11 @@ include 'config/dbConn.php';
           <div class="modal-footer">
             <button type="button" class="btn btn-animation btn-md fw-bold" data-bs-dismiss="modal">Cancel</button>
             <button type="submit" class="btn btn-animation btn-md fw-bold" data-bs-target="#exampleModalToggle2"
-              data-bs-toggle="modal" data-bs-dismiss="modal">Submit</button>
+              data-bs-toggle="modal" name="changeOrderStatus" data-bs-dismiss="modal">Submit</button>
           </div>
-          </form>
-        </div>
-      
+        </form>
+      </div>
+
     </div>
   </div>
 </body>
