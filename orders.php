@@ -162,7 +162,7 @@ include 'config/dbConn.php';
 
           }
           const setDefaultOrderStatus = (status) => {
-            console.log(status, $orderCode)
+            console.log(status)
             $('#ordStatus').val("pending");
           }
 
@@ -185,35 +185,38 @@ include 'config/dbConn.php';
   <!-- Delete Modal Box Start -->
   <div class="modal fade theme-modal remove-coupon" id="exampleEditOrderModal" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header d-block text-center my-3">
-          <h5 class="modal-title w-100" id="exampleModalLabel22">Change Order Status</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-        <div class="modal-body" style="min-height:120px">
-          <div class="remove-box d-flex justify-content-center">
-            <form action="querryCode/updateOrderStatus.php">
-              <input type="text" value=<?=$ord_id?>>
-              <select class="form-select w-50 " id="ordStatus" aria-label="Default select example"
-                style="border-radius:10px">
+      
+        <div class="modal-content">
+          <form action="querryCode/updateOrderStatus.php">
+          <div class="modal-header d-block text-center my-3">
+            <h5 class="modal-title w-100" id="exampleModalLabel22">Change Order Status</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body" style="min-height:120px">
+            <div class="remove-box d-flex justify-content-center">
+
+              <input type="text" value=<?= $ord_id ?> style="display:none">
+              <select class="form-select" id="ordStatus" aria-label="Default select example" style="border-radius:10px">
                 <option selected>Select Order Status</option>
                 <option value="pending">Pending</option>
                 <option value="Packaging">Packaging</option>
                 <option value="On the Way">On the Way</option>
                 <option value="Completed">Completed</option>
               </select>
-            </form>
 
+
+            </div>
           </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-animation btn-md fw-bold" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-animation btn-md fw-bold" data-bs-target="#exampleModalToggle2"
+              data-bs-toggle="modal" data-bs-dismiss="modal">Submit</button>
+          </div>
+          </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-animation btn-md fw-bold" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-animation btn-md fw-bold" data-bs-target="#exampleModalToggle2"
-            data-bs-toggle="modal" data-bs-dismiss="modal">Submit</button>
-        </div>
-      </div>
+      
     </div>
   </div>
 </body>
