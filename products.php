@@ -65,9 +65,9 @@ include 'config/dbConn.php';
                     <div class="right-options">
                       <ul>
                         <!-- added upload product button according to the instruction -->
-                        <li data-bs-toggle="modal" data-bs-target="#exampleModalToggle_UploadProduct">
+                        <!-- <li data-bs-toggle="modal" data-bs-target="#exampleModalToggle_UploadProduct">
                           <a href="#" class="btn btn-solid">Upload Product</a>
-                        </li>
+                        </li> -->
                         <li>
                           <a class="btn btn-solid" href="add-product.php">Add Product</a>
                         </li>

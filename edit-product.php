@@ -107,7 +107,7 @@ include 'config/dbConn.php';
                                     <?php
                                     $user_id = $_SESSION['loginInfo']["id"];
 
-                                    $fetchCatQuerry = "SELECT id, cat_name FROM category WHERE admin_id=$user_id";
+                                    $fetchCatQuerry = "SELECT id, cat_name FROM category";
                                     $querry_result = mysqli_query($conn, $fetchCatQuerry);
 
                                     if ($querry_result == true) {

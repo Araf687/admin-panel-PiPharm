@@ -2,9 +2,9 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="assets/images/favicon.png" type="image/x-icon">
-  <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
-  <title>Order Management System</title>
+  <link rel="icon" href="assets/images/favicon/medicine.png" type="image/x-icon">
+  <link rel="shortcut icon" href="assets/images/favicon/medicine.png" type="image/x-icon">
+  <title>PiPharma Admin Panel</title>
 
   <!-- Google font-->
   <link
@@ -51,7 +51,7 @@
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
   <!-- Main css -->
-  <link rel="stylesheet" type="text/css" href="assets">
+  <link rel="stylesheet" type="text/css" href="assets/css/main.css">
 
   <!-- sweet alert script -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.24/sweetalert2.all.js"></script>

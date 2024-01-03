@@ -1,32 +1,49 @@
+td.order-packaging span,
+td.delivery-packaging span {
+  background-color: rgba(200, 219, 27, 0.2);
+  color: #aaae38;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  position: relative;
+}
+td.delivery-pending span {
+  background-color: rgba(154, 154, 154, 0.2);
+  color: #9a9a9a;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  position: relative;
+}
 
- .imgContainerProd {
-    display: inline;
-    position: relative;
-    padding: 5px;
-  }
-  
-  .imgContainerProd img {
-    width: 100%;
-    height: auto;
-  }
-  
-  .imgContainerProd .crossButton {
-    position: absolute;
-    top: 5%;
-    left: 100%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    background-color: #555;
-    color: white;
-    font-size: 16px;
-    padding: 12px 24px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    text-align: center;
-  }
-  
-  .imgContainerProd .crossButton:hover {
-    background-color: red;
-    color:white;
-  }
+td.order-completed span, td.delivery-completed span {
+  background-color: rgba(66, 186, 150, 0.2);
+  color: #42ba96;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  position: relative;
+}
+
+td.delivery-on-the-way span {
+  background-color: rgba(122, 186, 66, 0.2);
+  color: #7eba42;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  position: relative;
+}
+
+td.order-approved span {
+  background-color: rgba(57, 175, 179, 0.2);
+  color: #3890ae;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  position: relative;
+}

@@ -106,7 +106,6 @@ if ( isset( $_SESSION['status'] ) ) {
                                                                 type="text" name="firstName"
                                                                 placeholder="Enter Your First Name">
 
-                                                                <?=$img_src ."-<"?>
                                                         </div>
                                                     </div>
 

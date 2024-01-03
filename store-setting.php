@@ -4,22 +4,22 @@ include 'config/dbConn.php';
 
 if (isset($_SESSION['status'])) {
 
-  if ($_SESSION['status'] == "Added Successfully") {
-    echo "<script>Swal.fire(
+    if ($_SESSION['status'] == "Added Successfully") {
+        echo "<script>Swal.fire(
         'Great!',
         'Added Successfully!',
         'success'
     );
     </script>";
-  } else if ($_SESSION['status'] == "Updated Successfully") {
-    echo "<script>Swal.fire(
+    } else if ($_SESSION['status'] == "Updated Successfully") {
+        echo "<script>Swal.fire(
         'Great!',
         'Updated Successfully!',
         'success'
     );
     </script>";
-  } else if ($_SESSION['status'] == "Data already exist") {
-    echo "<script>
+    } else if ($_SESSION['status'] == "Data already exist") {
+        echo "<script>
     Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -27,8 +27,8 @@ if (isset($_SESSION['status'])) {
         footer: 'Data already exist'
       })
     </script>";
-  }
-  unset($_SESSION['status']);
+    }
+    unset($_SESSION['status']);
 }
 ?>
 <!DOCTYPE html>
@@ -48,12 +48,12 @@ if (isset($_SESSION['status'])) {
     <!-- page-wrapper Start-->
     <div class="page-wrapper compact-wrapper" id="pageWrapper">
         <?php include('includes/header.php');
-    ?>
+        ?>
 
         <!-- Page Body Start-->
         <div class="page-body-wrapper">
             <?php include('includes/sidebar.php');
-      ?>
+            ?>
 
             <!-- Settings Section Start -->
             <div class="page-body">
@@ -72,60 +72,54 @@ if (isset($_SESSION['status'])) {
                                                 </div>
 
                                                 <?php
-                        $admin_id = $_SESSION['loginInfo']["id"];
-                        settype($admin_id, "integer");
+                                                $admin_id = $_SESSION['loginInfo']["id"];
+                                                settype($admin_id, "integer");
 
-                        // $fetchCatQuerry = "SELECT * FROM store WHERE `admin_id`=$admin_id LIMIT 1";
+                                                // $fetchCatQuerry = "SELECT * FROM store WHERE `admin_id`=$admin_id LIMIT 1";
+                                                
+                                                $fetchCatQuerry = "SELECT * FROM pharmacy_admin AS admin
+                                                                    INNER JOIN pharmacy_address AS address
+                                                                     ON admin.id = address.pharmacy_id";
 
-                        $fetchCatQuerry = "SELECT 
-                        *
-                        FROM 
-                            pharmacy_admin AS admin
-                        INNER JOIN 
-                            pharmacy_address AS address
-                        ON 
-                            admin.id = address.pharmacy_id
-                        ";
+                                                $querry_result = mysqli_query($conn, $fetchCatQuerry);
 
-                        $querry_result = mysqli_query($conn, $fetchCatQuerry);
+                                                $store_id = "";
+                                                $store_name = "";
+                                                $phone = "";
+                                                $Store_location = "";
+                                                $email = "";
+                                                $logo = "";
+                                                $banner = "";
+                                                $img_src_logo = "";
+                                                $img_src_banner = "";
 
-                        $store_id = "";
-                        $store_name = "";
-                        $phone = "";
-                        $Store_location = "";
-                        $email = "";
-                        $logo = "";
-                        $banner = "";
-                        $img_src_logo = "";
-                        $img_src_banner = "";
-                        
-                        if ($querry_result == true) {
-                            $count = mysqli_num_rows($querry_result);
-                            $slNo = 1;
-                            if ($count > 0) {
+                                                if ($querry_result == true) {
+                                                    $count = mysqli_num_rows($querry_result);
+                                                    $slNo = 1;
+                                                    if ($count > 0) {
 
-                                while ($rows = mysqli_fetch_assoc($querry_result)) {
-                                    $store_id = $rows['id'];
-                                    $store_name = $rows['shop_name'];
-                                    $phone = $rows['admin_phone'];
-                                    $Store_location = $rows['address'];
-                                    $email = $rows['admin_email'];
-                                    $logo = $rows['brand_logo'];
-                                    $banner = $rows['shop_image'];
-                                    $img_src_logo = "assets/images/store/logo/" . $logo;
-                                    $img_src_banner = "assets/images/store/banner/" . $banner;
+                                                        while ($rows = mysqli_fetch_assoc($querry_result)) {
+                                                            $store_id = $rows['id'];
+                                                            $store_name = $rows['shop_name'];
+                                                            $phone = $rows['admin_phone'];
+                                                            $Store_location = $rows['address'];
+                                                            $email = $rows['admin_email'];
+                                                            $logo = $rows['brand_logo'];
+                                                            $banner = $rows['shop_image'];
+                                                            $img_src_logo = "assets/images/store/logo/" . $logo;
+                                                            $img_src_banner = "assets/images/store/banner/" . $banner;
 
-                                    //pharmacy address
-                                    $street_address=$rows['address'];
-                                    $country=$rows['country'];
-                                    $zipCode=$rows['zip_code'];
-                                    $state=$rows['state'];
-                                    $city=$rows['city'];
+                                                            //pharmacy address
+                                                            $street_address = $rows['address'];
+                                                            $country = $rows['country'];
+                                                            $zipCode = $rows['zip_code'];
+                                                            $state = $rows['state'];
+                                                            $city = $rows['city'];
 
-                                }
-                            }
-                        }
-                    ?>
+                                                        }
+                                                    }
+                                                }
+                                                ?>
                                                 <div class="row">
                                                     <!-- hidden input store id -->
                                                     <input type="text" value="<?php echo $store_id; ?>" name="store_id"
@@ -225,29 +219,29 @@ if (isset($_SESSION['status'])) {
                                                         <div class="col-md-9 col-lg-9">
                                                             <div class="mb-3">
                                                                 <label>Street Address</label>
-                                                                <input name="addr_main" value=<?=$street_address?> class="form-control"
-                                                                    type="text">
+                                                                <input name="addr_main" value=<?= $street_address ?>
+                                                                    class="form-control" type="text">
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-md-6 col-lg-6 mb-2">
                                                                     <label>City</label>
-                                                                    <input name="addr_city" value=<?=$city?>  class="form-control"
-                                                                        type="text">
+                                                                    <input name="addr_city" value=<?= $city ?>
+                                                                        class="form-control" type="text">
                                                                 </div>
                                                                 <div class="col-md-6 col-lg-6 mb-2">
                                                                     <label>State</label>
-                                                                    <input name="addr_state" value=<?=$state?> class="form-control"
-                                                                        type="text">
+                                                                    <input name="addr_state" value=<?= $state ?>
+                                                                        class="form-control" type="text">
                                                                 </div>
                                                                 <div class="col-md-6 col-lg-6 mb-2">
                                                                     <label>Country</label>
-                                                                    <input name="addr_country" value=<?=$country?> class="form-control"
-                                                                        type="text">
+                                                                    <input name="addr_country" value=<?= $country ?>
+                                                                        class="form-control" type="text">
                                                                 </div>
                                                                 <div class="col-md-6 col-lg-6 mb-2">
                                                                     <label>Zip Code</label>
-                                                                    <input name="addr_zip" value=<?=$zipCode?> class="form-control"
-                                                                        type="text">
+                                                                    <input name="addr_zip" value=<?= $zipCode ?>
+                                                                        class="form-control" type="text">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -263,20 +257,20 @@ if (isset($_SESSION['status'])) {
                                         </div>
 
                                         <?php if ($store_name == " ") { ?>
-                                        <div style="padding-right:30px !important; margin-bottom:20px;">
-                                            <button name="addStore" type="submit"
-                                                class="btn ms-auto theme-bg-color text-white">Add
-                                                Store Information</button>
-                                        </div>
-                                        <?php
-                          } else {
-                            echo "<script> let logo=document.getElementById('logoImg'); let banner=document.getElementById('bannerImg'); </script>";
-                            ?>
+                                            <div style="padding-right:30px !important; margin-bottom:20px;">
+                                                <button name="addStore" type="submit"
+                                                    class="btn ms-auto theme-bg-color text-white">Add
+                                                    Store Information</button>
+                                            </div>
+                                            <?php
+                                        } else {
+                                            echo "<script> let logo=document.getElementById('logoImg'); let banner=document.getElementById('bannerImg'); </script>";
+                                            ?>
 
-                                        <div>
-                                            <button style="margin-bottom:20px;" name="UpdateStore" id="updateProfileBtn"
-                                                type="submit" class="btn theme-bg-color text-white">Update</button>
-                                        </div>
+                                            <div>
+                                                <button style="margin-bottom:20px;" name="UpdateStore" id="updateProfileBtn"
+                                                    type="submit" class="btn theme-bg-color text-white">Update</button>
+                                            </div>
                                         <?php } ?>
                                     </form>
                                     <!-- Details End -->
@@ -287,41 +281,41 @@ if (isset($_SESSION['status'])) {
                 </div>
 
                 <?php include('includes/footer.php');
-        ?>
+                ?>
             </div>
             <!-- index body end -->
             <script>
-            function dropzoneAreaClick() {
-                console.log("here click upcontent");
-                document.getElementById('bannerInput').click();
-            }
-
-            function handleChangeFile(event) {
-                console.log("hi");
-                var imageContent = document.getElementById('bannerInput');
-                var imageName = imageContent.files.item(0).name;
-
-                document.getElementById('image-name').innerText = imageName;
-
-                let preview = document.getElementById('bannerImg');
-                preview.style.display = "block"
-                console.log(event.target.files[0]);
-                preview.src = URL.createObjectURL(event.target.files[0]);
-                preview.onload = function() {
-                    URL.revokeObjectURL(preview.src) // free memory
+                function dropzoneAreaClick() {
+                    console.log("here click upcontent");
+                    document.getElementById('bannerInput').click();
                 }
 
-            }
-            const handleLogo = (event) => {
-                let preview = document.getElementById('logoImg');
-                preview.style.display = "block"
-                console.log(event.target.files[0]);
-                preview.src = URL.createObjectURL(event.target.files[0]);
-                preview.onload = function() {
-                    URL.revokeObjectURL(preview.src) // free memory
-                }
+                function handleChangeFile(event) {
+                    console.log("hi");
+                    var imageContent = document.getElementById('bannerInput');
+                    var imageName = imageContent.files.item(0).name;
 
-            }
+                    document.getElementById('image-name').innerText = imageName;
+
+                    let preview = document.getElementById('bannerImg');
+                    preview.style.display = "block"
+                    console.log(event.target.files[0]);
+                    preview.src = URL.createObjectURL(event.target.files[0]);
+                    preview.onload = function () {
+                        URL.revokeObjectURL(preview.src) // free memory
+                    }
+
+                }
+                const handleLogo = (event) => {
+                    let preview = document.getElementById('logoImg');
+                    preview.style.display = "block"
+                    console.log(event.target.files[0]);
+                    preview.src = URL.createObjectURL(event.target.files[0]);
+                    preview.onload = function () {
+                        URL.revokeObjectURL(preview.src) // free memory
+                    }
+
+                }
             </script>
 
         </div>
@@ -330,7 +324,7 @@ if (isset($_SESSION['status'])) {
     <!-- page-wrapper End-->
 
     <?php include('includes/scripts.php');
-  ?>
+    ?>
 </body>
 
 </html>

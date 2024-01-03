@@ -44,7 +44,7 @@ include 'config/dbConn.php';
                             <th>Order Code</th>
                             <th>Date</th>
                             <th>Payment Method</th>
-                            <th>Order Type</th>
+                            <th>Order Status</th>
                             <th>Delivery Status</th>
                             <th>Amount</th>
                             <th>Option</th>
@@ -77,7 +77,7 @@ include 'config/dbConn.php';
                                 $amount = $rows['sale_amount'];
                                 $pay_method = $rows['payment_method'];
                                 $status = $rows['delivery_status'];
-                                $orderType = $rows['order_type'];
+                                $orderStatus = $rows['order_status'];
 
                                 $exploded_date = explode(" ", $ord_date);
                                 $newDate = date("jS F Y", strtotime($exploded_date[0]));
@@ -95,12 +95,14 @@ include 'config/dbConn.php';
                                   <td>
                                     <?php echo $pay_method; ?>
                                   </td>
-                                  <td>
-                                    <?php echo $orderType; ?>
+                                  <td class="<?php echo "order-".strtolower($orderStatus); ?>" id='<?= $ord_id . "-ordStatus" ?>'>
+                                    <span id='<?= $ord_id . "_ord_span" ?>'>
+                                      <?php echo $orderStatus; ?>
+                                    </span>
                                   </td>
 
-                                  <td class="<?php echo "order-" . $status; ?>">
-                                    <span>
+                                  <td class="<?php echo "delivery-" . str_replace(" ", "-", strtolower($status)); ?>" id='<?= $ord_id."_deliveryStatus" ?>'>
+                                    <span id='<?= $ord_id . "_deliver_span" ?>'>
                                       <?php echo $status; ?>
                                     </span>
                                   </td>
@@ -124,7 +126,8 @@ include 'config/dbConn.php';
                                         <!-- Button trigger modal -->
                                         <a href="javascript:void(0)" data-bs-toggle="modal"
                                           data-bs-target="#exampleEditOrderModal"
-                                          onclick="setDefaultOrderStatus('<?= $status ?>')">
+                                          onclick="setDefaultStatus('<?=$status?>' , '<?=$orderStatus?>')"
+                                        >
                                           <i class="ri-edit-2-line" style="color:#009289;"></i>
                                         </a>
 
@@ -161,9 +164,10 @@ include 'config/dbConn.php';
             sessionStorage.setItem("del_id", ordId);
 
           }
-          const setDefaultOrderStatus = (status) => {
-            console.log(status)
-            $('#ordStatus').val("pending");
+          const setDefaultStatus = (deliveryStatus,orderStatus) => {
+            console.log(deliveryStatus,orderStatus,deliveryStatus.toLowerCase())
+            $('#deliveryStatus').val(deliveryStatus.toLowerCase());
+            $('#ordStatus').val(orderStatus.toLowerCase());
           }
 
           $(document).ready(function () {
@@ -176,11 +180,11 @@ include 'config/dbConn.php';
               if (request) {
                 request.abort();
               }
-              var $form = $(this);
-              var serializedData = $form.serialize();
+              var form = $(this);
+              var serializedData = form.serialize();
 
               request = $.ajax({
-                url: "php_backend/user/loginCode.php",
+                url: "querryCode/updateOrderStatus.php",
                 type: "post",
                 data: serializedData,
               });
@@ -191,9 +195,20 @@ include 'config/dbConn.php';
 
                 if (jsonData?.isSuccess) {
                   console.log(jsonData);
+                  const { orderId, deliveryStatus,orderStatus } = jsonData.data;
+
+                  console.log(orderId, deliveryStatus,orderStatus,`delivery-${deliveryStatus.toLowerCase()}`)
+
+                  $(`#${orderId}-ordStatus`).removeClass().addClass(`order-${orderStatus.toLowerCase()}`);
+                  $(`#${orderId}_ord_span`).text(orderStatus);
+
+                  $(`#${orderId}_deliveryStatus`).removeClass().addClass(`delivery-${deliveryStatus.toLowerCase().replace(/ /g, "-")}`);
+                  $(`#${orderId}_deliver_span`).text(deliveryStatus);
+
+
                   Swal.fire({
                     title: "Good job!",
-                    text: "Logged In Successfully",
+                    text: "Status Changed Successfully",
                     icon: "success"
                   });
                 } else {
@@ -217,6 +232,8 @@ include 'config/dbConn.php';
             });
           })
 
+
+
         </script>
 
         <?php include('includes/footer.php');
@@ -232,7 +249,7 @@ include 'config/dbConn.php';
   <?php include('includes/scripts.php');
   ?>
 
-  <!-- Delete Modal Box Start -->
+  <!-- update delivery status Modal Box Start -->
   <div class="modal fade theme-modal remove-coupon" id="exampleEditOrderModal" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
 
@@ -245,31 +262,44 @@ include 'config/dbConn.php';
             </button>
           </div>
           <div class="modal-body" style="min-height:120px">
-            <div class="remove-box d-flex justify-content-center">
-
-              <input type="text" name="order_id" value=<?= $ord_id ?> style="display:none">
+            <input type="text" name="order_id" value=<?= $ord_id ?> style="display:none">
+            <p class="mb-0">Order Status</p>
+            <div class="remove-box d-flex justify-content-center mb-3">
+              
               <select class="form-select" id="ordStatus" name="ordStatus" aria-label="Default select example"
                 style="border-radius:10px">
                 <option selected>Select Order Status</option>
                 <option value="pending">Pending</option>
-                <option value="Packaging">Packaging</option>
-                <option value="On the Way">On the Way</option>
-                <option value="Completed">Completed</option>
+                <option value="approved">Approved</option>
+                <option value="completed">Completed</option>
               </select>
-
-
             </div>
+            <p class="mb-0">Delivery Status</p>
+            <div class="remove-box d-flex justify-content-center">
+              <select class="form-select" id="deliveryStatus" name="deliveryStatus" aria-label="Default select example"
+                style="border-radius:10px">
+                <option selected>Select Deliver Status</option>
+                <option value="pending">Pending</option>
+                <option value="packaging">Packaging</option>
+                <option value="on-the-way">On the Way</option>
+                <option value="completed">Completed</option>
+              </select>
+            </div>
+
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-animation btn-md fw-bold" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-animation btn-md fw-bold" data-bs-target="#exampleModalToggle2"
-              data-bs-toggle="modal" name="changeOrderStatus" data-bs-dismiss="modal">Submit</button>
+            <button type="submit" class="btn btn-animation btn-md fw-bold" name="changeOrderStatus"
+              data-bs-dismiss="modal">Submit</button>
           </div>
         </form>
       </div>
 
     </div>
   </div>
+
+
+
 </body>
 
 </html>

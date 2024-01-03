@@ -10,9 +10,9 @@
       </div>
       <div class="toggle-sidebar">
         <i class="status_toggle middle sidebar-toggle" data-feather="align-center"></i>
-        <a href="index.php">
+        <!-- <a href="index.php">
           <img src="assets/images/logo/1.png" class="img-fluid" alt="">
-        </a>
+        </a> -->
       </div>
     </div>
 
