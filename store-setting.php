@@ -2,34 +2,7 @@
 include 'config/session.php';
 include 'config/dbConn.php';
 
-if (isset($_SESSION['status'])) {
 
-    if ($_SESSION['status'] == "Added Successfully") {
-        echo "<script>Swal.fire(
-        'Great!',
-        'Added Successfully!',
-        'success'
-    );
-    </script>";
-    } else if ($_SESSION['status'] == "Updated Successfully") {
-        echo "<script>Swal.fire(
-        'Great!',
-        'Updated Successfully!',
-        'success'
-    );
-    </script>";
-    } else if ($_SESSION['status'] == "Data already exist") {
-        echo "<script>
-    Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Failed to add Store!',
-        footer: 'Data already exist'
-      })
-    </script>";
-    }
-    unset($_SESSION['status']);
-}
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -39,6 +12,37 @@ include('includes/head.php');
 ?>
 
 <body>
+
+    <?php
+    if (isset($_SESSION['status'])) {
+
+        if ($_SESSION['status'] == "Added Successfully") {
+            echo "<script>Swal.fire(
+            'Great!',
+            'Added Successfully!',
+            'success'
+        );
+        </script>";
+                } else if ($_SESSION['status'] == "Updated Successfully") {
+                    echo "<script>Swal.fire(
+            'Great!',
+            'Updated Successfully!',
+            'success'
+        );
+        </script>";
+                } else if ($_SESSION['status'] == "Data already exist") {
+                    echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Failed to add Store!',
+            footer: 'Data already exist'
+        })
+        </script>";
+                }
+                unset($_SESSION['status']);
+            } 
+    ?>
 
     <!-- tap on top start -->
     <div class="tap-top">
@@ -269,7 +273,8 @@ include('includes/head.php');
 
                                                             </div>
                                                             <div id="map" class="my-2 rounded shadow"
-                                                                style="height:450px;"></div>
+                                                                style="height:450px;opacity: 0.5; pointer-events: none;">
+                                                            </div>
 
                                                             <p class="text-center" style="font-size:18px">You can also
                                                                 drag the blue marker to set the specific
