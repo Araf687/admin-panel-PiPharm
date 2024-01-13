@@ -34,7 +34,8 @@ if (isset($_SESSION['status'])) {
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
-<?php include('includes/head.php');
+<?php
+include('includes/head.php');
 ?>
 
 <body>
@@ -245,14 +246,38 @@ if (isset($_SESSION['status'])) {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- <div class="col-sm-1">
-                              <i class="ri-close-fill text-danger cancelIcon" onclick="deleteAddress(this.parentElement)" style="cursor:pointer;font-weight: bolder;"></i>
-                            </div> -->
-                                                    </div>
 
+                                                    </div>
                                                 </div>
 
-                                                <!-- <span onclick="addAddress()" class="add-option" style="cursor:pointer"><i class="ri-add-line me-2"></i> Add Another Address</span> -->
+                                                <div>
+                                                    <div class="row">
+
+                                                        <div class="col-md-12">
+                                                            <button type="button" class="btn btn-success"
+                                                                onclick="getLocationFromBrowser()">Current
+                                                                Location</button>
+                                                            <div id="myHiddenDiv" style="display: none;">
+                                                                <p class="text-danger mt-1">location is required. Press
+                                                                    on current
+                                                                    location button.</p>
+                                                            </div>
+
+                                                            <div class="ms-2 d-none"><span>Latitude & Longitude</span>
+                                                                <div><input type="text" name='latLong' id="LatLong"
+                                                                        value=<?= $latLong ?>></div>
+
+                                                            </div>
+                                                            <div id="map" class="my-2 rounded shadow"
+                                                                style="height:450px;"></div>
+
+                                                            <p class="text-center" style="font-size:18px">You can also
+                                                                drag the blue marker to set the specific
+                                                                location.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -317,6 +342,10 @@ if (isset($_SESSION['status'])) {
 
                 }
             </script>
+            <!--Leaflet js link. Make sure you put this AFTER Leaflet's CSS -->
+            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+                integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+            <script src="assets/js/map/map.js"></script>
 
         </div>
         <!-- Page Body End -->

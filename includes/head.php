@@ -33,9 +33,9 @@
   <link rel="stylesheet" type="text/css" href="assets/css/vendors/scrollbar.css">
   <link rel="stylesheet" type="text/css" href="assets/css/vendors/animate.css">
 
-  <!-- Bootstrap css-->
-  <!-- <link rel="stylesheet" type="text/css" href="assets/css/vendors/bootstrap.css"> -->
-
+  <!-- //leaflet src link  -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 
   <!-- bootstrap link  -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"

@@ -27,8 +27,11 @@ if (isset($_COOKIE['login_status'])) {
 
                 // Make sure the file exists
                 if (file_exists($tmp_file_path)) {
+                    $imageName=str_replace("'", '', $key);
+                    $imageNameKey=str_replace("'", '', $_FILES['files']['name'][$key]);
+
                     // Generate a new file name
-                    $new_file_name = time() . '-' . $key . $_FILES['files']['name'][$key];
+                    $new_file_name = time() . '-' . $imageName . $imageNameKey;
 
                     if ($fileNameAsString == "") {
                         $fileNameAsString = $fileNameAsString . $new_file_name;
