@@ -10,7 +10,7 @@ const getLocationFromBrowser = () => {
     navigator.geolocation.getCurrentPosition(function (position) {
       var latitude = position.coords.latitude;
       var longitude = position.coords.longitude;
-
+      
       showUserLocationOnMap(latitude, longitude);
     });
   } else {
@@ -18,6 +18,7 @@ const getLocationFromBrowser = () => {
   }
 };
 const showUserLocationOnMap = (latitude, longitude) => {
+  console.log(typeof(latitude),"ASdasd",latitude, longitude);
   // Update visual appearance (optional)
   document.getElementById("map").style.opacity = 1; // Restore opacity
   document.getElementById("map").style.pointerEvents = "auto"; // Enable pointer events

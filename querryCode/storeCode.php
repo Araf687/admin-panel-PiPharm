@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "../config/dbConn.php";
+include "./supportiveFunction.php";
 if (isset($_COOKIE['login_status'])) {
     if (isset($_POST['addStore']) || isset($_POST['UpdateStore'])) {
 
@@ -32,7 +33,7 @@ if (isset($_COOKIE['login_status'])) {
         $latLong = explode(',', $_POST['latLong']);
 
         $latitude = floatval($latLong[0]);
-        $longitude = floatval($latLong[0]);
+        $longitude = floatval($latLong[1]);
 
         $updatePharmacy = '';
 
@@ -57,21 +58,31 @@ if (isset($_COOKIE['login_status'])) {
 
             if (isset($_FILES['store_logo']) && $_FILES["store_logo"]["error"] == UPLOAD_ERR_OK) {
 
-                $folderPath='../assets/images/store/logo/';
+                $folderPathLogo='../assets/images/store/logo/';
                 $targetedFile=$_FILES['store_logo']['tmp_name'];
-                // deleteImageFromFolder($prevImageName,$folderPath);
-                // uploadImage($logo_filename, $folderPath, $targetedFile);
+                $prevLogoName=$_POST['prevLogo'];
 
-                move_uploaded_file($targetedFile, $folderPath . $logo_filename);
+                if($prevLogoName){
+                    deleteImageFromFolder($prevLogoName,$folderPathLogo);
+                }
+              
+                uploadImage($logo_filename, $folderPathLogo, $targetedFile);
+
+                // move_uploaded_file($targetedFile, $folderPath . $logo_filename);
 
             }
             if (isset($_FILES['store_banner'])&& $_FILES["store_banner"]["error"] == UPLOAD_ERR_OK) {
 
-                $folderPath='../assets/images/store/banner/';
+                $folderPathBanner='../assets/images/store/banner/';
                 $targetedFile=$_FILES['store_banner']['tmp_name'];
-                // deleteImageFromFolder($prevImageName,$folderPath);
-                // uploadImage($banner_filename, $folderPath,$targetedFile);
-                move_uploaded_file($targetedFile, $folderPath. $banner_filename);
+                $prevBannerName=$_POST['prevBanner'];
+                if($prevBannerName){
+                    
+                    deleteImageFromFolder($prevBannerName,$folderPathBanner);
+                }
+               
+                uploadImage($banner_filename, $folderPathBanner,$targetedFile);
+                // move_uploaded_file($targetedFile, $folderPath. $banner_filename);
 
             }
 

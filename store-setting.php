@@ -23,15 +23,15 @@ include('includes/head.php');
             'success'
         );
         </script>";
-                } else if ($_SESSION['status'] == "Updated Successfully") {
-                    echo "<script>Swal.fire(
+        } else if ($_SESSION['status'] == "Updated Successfully") {
+            echo "<script>Swal.fire(
             'Great!',
             'Updated Successfully!',
             'success'
         );
         </script>";
-                } else if ($_SESSION['status'] == "Data already exist") {
-                    echo "<script>
+        } else if ($_SESSION['status'] == "Data already exist") {
+            echo "<script>
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -39,9 +39,9 @@ include('includes/head.php');
             footer: 'Data already exist'
         })
         </script>";
-                }
-                unset($_SESSION['status']);
-            } 
+        }
+        unset($_SESSION['status']);
+    }
     ?>
 
     <!-- tap on top start -->
@@ -120,6 +120,10 @@ include('includes/head.php');
                                                             $zipCode = $rows['zip_code'];
                                                             $state = $rows['state'];
                                                             $city = $rows['city'];
+                                                            $latitude = $rows['latitude'];
+                                                            $longitude = $rows['longitude'];
+
+                                                            $latLong = $latitude . " " . $longitude;
 
                                                         }
                                                     }
@@ -172,6 +176,7 @@ include('includes/head.php');
                                                         <label class="col-sm-2 col-form-label form-label-title">Store
                                                             Logo</label>
                                                         <div class="col-sm-6">
+                                                            <input type="text" name="prevLogo" value=<?= $logo ?> class='d-none'>
                                                             <input class="form-control form-choose"
                                                                 onChange="handleLogo(event)" name="store_logo"
                                                                 type="file" id="formFileMultiple">
@@ -193,6 +198,8 @@ include('includes/head.php');
                                                                     <p id="image-name">Choose an image file or drag it
                                                                         here.</p>
                                                                 </div>
+                                                                <input type="text" name="prevBanner" value=<?= $banner ?>
+                                                                    class="d-none">
                                                                 <input type="file" id="bannerInput" name="store_banner"
                                                                     onChange="handleChangeFile(event)"
                                                                     accept="image/jpeg, image/png, image/jpg"
@@ -280,6 +287,12 @@ include('includes/head.php');
                                                                 drag the blue marker to set the specific
                                                                 location.
                                                             </p>
+
+                                                            <?php
+                                                            if ($latitude && $longitude) {
+                                                                echo "<script> $(document).ready(function() {showUserLocationOnMap($latitude, $longitude ); }); </script>";
+                                                            }
+                                                            ?>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -351,6 +364,12 @@ include('includes/head.php');
             <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
                 integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
             <script src="assets/js/map/map.js"></script>
+            <script>
+                const load = () => {
+                    console.log("aaa")
+                }
+            </script>
+
 
         </div>
         <!-- Page Body End -->
