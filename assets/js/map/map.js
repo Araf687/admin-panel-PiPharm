@@ -30,6 +30,7 @@ const showUserLocationOnMap = (latitude, longitude) => {
 
   map.flyTo([latitude, longitude], 17, { draggable: true });
   document.getElementById("LatLong").value = `${latitude}, ${longitude}`;
+  
 
   // Create a draggable marker
   var marker = L.marker([latitude, longitude], { draggable: true }).addTo(map);
