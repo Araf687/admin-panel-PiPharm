@@ -35,10 +35,10 @@ include 'config/dbConn.php';
                   settype( $admin_id, "integer" );
 
                   $countQuery = "SELECT 
-                                (SELECT COUNT(*) FROM orders WHERE admin_id=$admin_id) AS totalOrder, 
-                                (SELECT SUM(sale_amount) FROM orders WHERE admin_id=$admin_id) AS totalRevenue,
-                                (SELECT COUNT(*) FROM product WHERE admin_id=$admin_id) AS totalProduct,
-                                (SELECT COUNT(*) FROM user WHERE admin_id=$admin_id) AS totalUser";
+                                (SELECT COUNT(*) FROM orders WHERE pharmacy_id=$admin_id) AS totalOrder, 
+                                (SELECT SUM(sale_amount) FROM orders WHERE pharmacy_id=$admin_id) AS totalRevenue,
+                                (SELECT COUNT(*) FROM product WHERE pharmacy_id=$admin_id) AS totalProduct,
+                                (SELECT COUNT(*) FROM user WHERE id=$admin_id) AS totalUser";
 
                   $query_result = mysqli_query( $conn, $countQuery );
 
@@ -159,7 +159,7 @@ include 'config/dbConn.php';
                                                     <?php
         $fetchBestSellingProd = "SELECT product.prd_name, product.prd_price, SUM(orderitems.qty) AS total_sales 
                                 FROM orderitems, product
-                                WHERE orderitems.prod_id = product.prd_id AND product.admin_id=$admin_id
+                                WHERE orderitems.prod_id = product.prd_id AND product.pharmacy_id=$admin_id
                                 GROUP BY product.prd_name, product.prd_price 
                                 ORDER BY total_sales DESC 
                                 LIMIT 4;

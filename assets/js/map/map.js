@@ -19,14 +19,16 @@ const getLocationFromBrowser = () => {
   }
 };
 const showUserLocationOnMap = (latitude, longitude) => {
-  // Remove the previous marker if it exists
-  if (currentMarker) {
-    map.removeLayer(currentMarker);
-  }
 
   // Update visual appearance (optional)
   document.getElementById("map").style.opacity = 1; // Restore opacity
   document.getElementById("map").style.pointerEvents = "auto"; // Enable pointer events
+
+    // Remove the previous marker if it exists
+    if (currentMarker) {
+      map.removeLayer(currentMarker);
+    }
+  
 
   map.flyTo([latitude, longitude], 17, { draggable: true });
   document.getElementById("LatLong").value = `${latitude}, ${longitude}`;
