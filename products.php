@@ -109,7 +109,7 @@ include 'config/dbConn.php';
                           $query_result = mysqli_query($conn, $fetchPrdQuery);
                           $count = 0;
                           if ($query_result == true) {
-                          
+
                             $count = mysqli_num_rows($query_result);
                             $slNo = 1;
 
@@ -149,7 +149,7 @@ include 'config/dbConn.php';
                                     <?php echo $prd_sub_category; ?>
                                   </td>
 
-                                
+
 
                                   <td class="td-price">$
                                     <?php echo $prd_price; ?>
@@ -205,7 +205,9 @@ include 'config/dbConn.php';
 
                             ?>
                             <li class="page-item <?php echo $active; ?>">
-                              <a class="page-link" href="<?php echo "products.php?page=$i" ?>"> <?php echo $i; ?> </a>
+                              <a class="page-link" href="<?php echo "products.php?page=$i" ?>">
+                                <?php echo $i; ?>
+                              </a>
                             </li>
                           <?php } ?>
                         </ul>
@@ -223,7 +225,6 @@ include 'config/dbConn.php';
             console.log(prdId);
             sessionStorage.setItem("tableName", "product");
             sessionStorage.setItem("del_id", prdId);
-
           }
 
         </script>
