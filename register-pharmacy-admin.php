@@ -57,22 +57,19 @@
                         </div>
 
                         <div class="input-box">
-                            <form action="querryCode/loginCode.php" method="POST" class="row g-4">
-                                <div>
-                                    <div>
-                                        <label class="form-check-label" for="inlineRadio1">Select your account
-                                            type</label>
+                            <form action="querryCode/registerPharmacyCode.php" method="POST" class="row g-4">
+                                <div class="col-12">
+                                    <div class="form-floating theme-form-floating log-in-form">
+                                        <input type="text" class="form-control" name="pharmacy_admin_name" 
+                                            placeholder="Admin Name">
+                                        <label for="admin_name">Admin Name</label>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="loginType"
-                                            onchange="checkRadioButton(this)"  id="inlineRadio1"
-                                            value="authority" checked>
-                                        <label class="form-check-label" for="inlineRadio1">Authority Admin</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" onchange="checkRadioButton(this)"
-                                             name="loginType" id="inlineRadio2" value="pharmacy">
-                                        <label class="form-check-label" for="inlineRadio2">Pharmacy</label>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating theme-form-floating log-in-form">
+                                        <input type="text" class="form-control" name="pharmacy_name" 
+                                            placeholder="Pharmacy Name">
+                                        <label for="pharmacy_name">Pharmacy Name</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -92,13 +89,12 @@
                                 </div>
 
                                 <div class="col-12">
-                                    <button class="btn btn-animation w-100 justify-content-center" name="loginBTN"
+                                    <button class="btn btn-animation w-100 justify-content-center" name="registerPharmacyButton"
                                         type="submit">Login</button>
                                 </div>
-                                <div class="col-12 d-none" id="registerPharmacyOption">
-                                    <p>Have not registered yet? <a href="register-pharmacy-admin.php"><strong
-                                                class="text-primary">Create
-                                                Account</strong> </a></p>
+                                <div class="col-12" id="registerPharmacyOption">
+                                    <p>Already registered? <a
+                                                href="login.php"><strong class="text-primary">Login to your account</strong> </a></p>
                                 </div>
                             </form>
                         </div>
@@ -109,26 +105,7 @@
         </div>
     </section>
     <!-- login section end -->
-    <script>
-        function checkRadioButton(radioButton) {
-            var registerPharmacyOpt = document.getElementById("registerPharmacyOption");
-            // Use the 'this' keyword to reference the specific radio button
-            var selectedValue = radioButton.value;
 
-            if (selectedValue === "pharmacy") {
-
-
-                console.log(registerPharmacyOpt)
-
-                // Set the display property to "block"
-                registerPharmacyOpt.classList.remove("d-none")
-            }
-            else {
-                // Set the display property to "none"
-                registerPharmacyOpt.classList.add("d-none")
-            }
-        }
-    </script>
 
 </body>
 

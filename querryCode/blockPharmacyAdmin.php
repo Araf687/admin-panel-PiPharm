@@ -4,7 +4,7 @@ session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         $pharmacy_admin_id = isset($_POST['pharmacy_admin_id']) ? mysqli_real_escape_string($conn, $_POST['pharmacy_admin_id']) : null;
-        $status = isset($_POST['status']) ? mysqli_real_escape_string($conn, $_POST['status']) : null;
+        $status = isset($_POST['status']) ? trim( mysqli_real_escape_string($conn, $_POST['status'])) : null;
         settype($pharmacy_admin_id, "integer");
 
 

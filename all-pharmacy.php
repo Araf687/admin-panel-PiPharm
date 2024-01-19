@@ -173,7 +173,7 @@ include 'config/dbConn.php';
 
           }
           const handleClickBlockUser = (pharmacyAdminId, status, pharmacyAdminName) => {
-            const newStatus = (status == 'active' || status == 'active') ? 'Inactive' : 'Active';
+            const newStatus = (status == 'active' || status == 'Active') ? 'Inactive' : 'Active';
             const changeStatusModalText = "You want to " + newStatus + " " + pharmacyAdminName + "?";
             $('#changeStatusModalText').text(changeStatusModalText);
             $('#hiddenUserId').val(pharmacyAdminId);
