@@ -96,7 +96,7 @@ include 'config/dbConn.php';
                         $admin_id = $_SESSION['loginInfo']["id"];
                         settype($admin_id, "integer");
 
-                        $fetchUserQuerry = "SELECT * FROM pharmacy_admin WHERE `created_by`=$admin_id";
+                        $fetchUserQuerry = "SELECT * FROM pharmacy_admin";
                         $query_result = mysqli_query($conn, $fetchUserQuerry);
 
                         if ($query_result == true) {

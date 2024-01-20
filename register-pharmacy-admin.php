@@ -27,16 +27,26 @@
 <body>
 
     <?php
+    session_start();
     if (isset($_SESSION['status'])) {
 
-        if ($_SESSION['status'] == "Failed to log in") {
+        if ($_SESSION['status'] == "Failed") {
             echo "<script>
-    Swal.fire({
-      icon: 'error',
-      title: 'Failed to log in',
-      text: 'Invaid Id or Password',
-    })
-    </script>";
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to register pharmacy',
+                    
+                    })
+                </script>";
+        }
+        if ($_SESSION['status'] == "added") {
+            echo "<script>
+            Swal.fire({
+                title: 'Good job!',
+                text: 'Registered Successfully!',
+                icon: 'success'
+              });
+                </script>";
         }
         unset($_SESSION['status']);
     }
@@ -57,44 +67,59 @@
                         </div>
 
                         <div class="input-box">
-                            <form action="querryCode/registerPharmacyCode.php" method="POST" class="row g-4">
+                            <form action="querryCode/registerPharmacyCode.php" method="POST" class="row g-3">
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating log-in-form">
-                                        <input type="text" class="form-control" name="pharmacy_admin_name" 
-                                            placeholder="Admin Name">
-                                        <label for="admin_name">Admin Name</label>
+                                        <input type="text" class="form-control" name="pharmacy_admin_first_name"
+                                            placeholder="First Name">
+                                        <label for="admin_name">First Name</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating log-in-form">
-                                        <input type="text" class="form-control" name="pharmacy_name" 
+                                        <input type="text" class="form-control" name="pharmacy_admin_last_name"
+                                            placeholder="Last Name">
+                                        <label for="admin_name">Last Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating theme-form-floating log-in-form">
+                                        <input type="text" class="form-control" name="pharmacy_name"
                                             placeholder="Pharmacy Name">
                                         <label for="pharmacy_name">Pharmacy Name</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating log-in-form">
-                                        <input type="email" class="form-control" name="email_id" id="email"
-                                            placeholder="Email Address">
+                                        <input type="email" class="form-control" name="pharmacy_email_id" id="email"
+                                            placeholder="Pharmacy Email Address">
                                         <label for="email">Email</label>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating log-in-form">
-                                        <input type="password" name="pass" class="form-control" id="password"
-                                            placeholder="Password">
+                                        <input type="password" name="password" class="form-control" id="password"
+                                            placeholder="Password" onblur="checkPassword()">
                                         <label for="password">Password</label>
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <div class="form-floating theme-form-floating log-in-form">
+                                        <input type="password" name="confirm_pass" class="form-control" id="confirm_password"
+                                            placeholder="Confirm Password" onblur="checkPassword()">
+                                        <label for="confirm_password">Confirm Password</label>
+                                    </div>
+                                    <p id="passErrorMessage" class="text-danger d-none">Password does not match!</p>
+                                </div>
 
                                 <div class="col-12">
-                                    <button class="btn btn-animation w-100 justify-content-center" name="registerPharmacyButton"
-                                        type="submit">Login</button>
+                                    <button class="btn btn-animation w-100 justify-content-center"
+                                        name="registerPharmacyButton" type="submit">Login</button>
                                 </div>
                                 <div class="col-12" id="registerPharmacyOption">
-                                    <p>Already registered? <a
-                                                href="login.php"><strong class="text-primary">Login to your account</strong> </a></p>
+                                    <p>Already registered? <a href="login.php"><strong class="text-primary">Login to
+                                                your account</strong> </a></p>
                                 </div>
                             </form>
                         </div>
@@ -105,6 +130,20 @@
         </div>
     </section>
     <!-- login section end -->
+    <script>
+        function checkPasswords() {
+            // Get the values of the password and confirm password fields
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm_password").value;
+
+            // Check if the passwords match
+            if (password != confirmPassword && password!) {
+                event.preventDefault();
+                document.getElementById("passErrorMessage").classList.remove("d-none");
+
+            }
+        }
+    </script>
 
 
 </body>

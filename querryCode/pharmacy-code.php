@@ -24,7 +24,7 @@ if ( isset( $_COOKIE['login_status'] ) ) {
                 
                 $addpharmacy_querry = "INSERT INTO pharmacy_admin 
                 (`first_name`, `last_name`, `admin_email`, `admin_phone`,`admin_pass`, `admin_type`,`admin_img` ,`shop_name`,`shop_image`,`brand_logo`,`status`,`created_by`)
-                 VALUES ('$pharmacy_firstname','$pharmacy_lastName','$admin_email','$phone','$pharmacy_pass','pharmacy',' ',' ',' ',' ','active',$admin_id)";
+                 VALUES ('$pharmacy_firstname','$pharmacy_lastName','$admin_email','$phone','$pharmacy_pass','pharmacy',' ',' ',' ',' ','Active',$admin_id)";
 
                 $run_addPharmacyQuerry = mysqli_query( $conn, $addpharmacy_querry ); 
 

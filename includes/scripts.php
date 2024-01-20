@@ -229,6 +229,9 @@
     else if (tableName == "Pharmacy_admin") {
       window.location = "querryCode/pharmacy-code.php?del_id=" + del_id;
     }
+    else if (tableName == "admin") {
+      window.location = "querryCode/adminCode.php?del_id=" + del_id;
+    }
     sessionStorage.removeItem("tableName");
     sessionStorage.removeItem("del_id");
   }

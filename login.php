@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="assets/images/favicon/medicine.png" type="image/x-icon">
     <link rel="shortcut icon" href="assets/images/favicon/medicine.png" type="image/x-icon">
-    <title>Order Management System</title>
+    <title>PiPharma Admin Panel</title>
 
     <!-- Google font-->
     <link
@@ -27,17 +27,38 @@
 <body>
 
     <?php
+    session_start();
     if (isset($_SESSION['status'])) {
 
-        if ($_SESSION['status'] == "Failed to log in") {
+        if ($_SESSION['status'] == "failed") {
             echo "<script>
-    Swal.fire({
-      icon: 'error',
-      title: 'Failed to log in',
-      text: 'Invaid Id or Password',
-    })
-    </script>";
+                Swal.fire({
+                icon: 'error',
+                title: 'Failed to log in',
+                text: 'Invalid Id or Password',
+                })
+                </script>";
         }
+        if ($_SESSION['status'] == "inactive") {
+            echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'You are inactive! Failed to login. Contact with admin',
+                
+              });
+                </script>";
+        }
+        if ($_SESSION['status'] == "login") {
+            echo "<script>
+            Swal.fire({
+                title: 'Good job!',
+                text: 'Logged in successfully!',
+                icon: 'success'
+              });
+            </script>";
+        }
+
         unset($_SESSION['status']);
     }
     ?>
@@ -60,18 +81,18 @@
                             <form action="querryCode/loginCode.php" method="POST" class="row g-4">
                                 <div>
                                     <div>
-                                        <label class="form-check-label" for="inlineRadio1">Select your account
-                                            type</label>
+                                        <label class="form-check-label" for="inlineRadio1">Select Your Account
+                                            Type</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="loginType"
-                                            onchange="checkRadioButton(this)"  id="inlineRadio1"
-                                            value="authority" checked>
+                                            onchange="checkRadioButton(this)" id="inlineRadio1" value="authority"
+                                            checked>
                                         <label class="form-check-label" for="inlineRadio1">Authority Admin</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" onchange="checkRadioButton(this)"
-                                             name="loginType" id="inlineRadio2" value="pharmacy">
+                                            name="loginType" id="inlineRadio2" value="pharmacy">
                                         <label class="form-check-label" for="inlineRadio2">Pharmacy</label>
                                     </div>
                                 </div>

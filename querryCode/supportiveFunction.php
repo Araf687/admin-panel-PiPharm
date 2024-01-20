@@ -25,3 +25,7 @@ function uploadImage($filename, $targetFolder, $targetedFile)
      // Move the file to the destination
      move_uploaded_file($targetedFile, $destination);
 }
+
+function sendMail(){
+
+}

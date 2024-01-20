@@ -126,7 +126,7 @@ if ( isset( $_SESSION['status'] ) ) {
                                                             </li>
                                                             <li>
                                                                 <a href="javascript:void(0)"
-                                                                    onClick="<?php echo "del_user( ".$admin_id." )"; ?>"
+                                                                    onClick="<?php echo "del_admin( ".$admin_id." )"; ?>"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#exampleModalToggle">
                                                                     <i class="ri-delete-bin-line"></i>
@@ -146,10 +146,10 @@ if ( isset( $_SESSION['status'] ) ) {
                 </div>
                 <!-- All User Table Ends-->
                 <script>
-                const del_user = (userId) => {
-                    console.log(userId);
-                    sessionStorage.setItem("tableName", "user");
-                    sessionStorage.setItem("del_id", userId);
+                const del_admin = (admin_id) => {
+                    console.log(admin_id);
+                    sessionStorage.setItem("tableName", "admin");
+                    sessionStorage.setItem("del_id", admin_id);
 
                 }
                 </script>

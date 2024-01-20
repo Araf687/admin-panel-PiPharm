@@ -67,7 +67,7 @@
             <?php
             $admin_img = "assets/images/admins/1676717087.png";
             $isPharmacyAdmin = $_SESSION['loginInfo']['adminType'] === "pharmacy";
-            if (isset($_SESSION['loginInfo']['adminImg']) && $_SESSION['loginInfo']['adminImg']) {
+            if (isset($_SESSION['loginInfo']['adminImg']) && $_SESSION['loginInfo']['adminImg']!=' ') {
               $admin_img = $isPharmacyAdmin ? "assets/images/pharmacy_admins/" . $_SESSION['loginInfo']['adminImg'] : "assets/images/admins/" . $_SESSION['loginInfo']['adminImg'];
             }
             ?>
@@ -103,5 +103,6 @@
       </ul>
     </div>
   </div>
+  
 </div>
 <!-- Page Header Ends-->
