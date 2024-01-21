@@ -76,12 +76,13 @@ include 'config/dbConn.php';
                         <div class="mb-4 row align-items-center">
                           <label class="col-sm-3 col-form-label form-label-title">Category</label>
                           <div class="col-sm-9">
-                            <select class="js-example-basic-single w-100" name="category">
+                            <select class="js-example-basic-single w-100" name="category"
+                              onchange="handleChangeCategory(this)">
                               <option selected>Select Category</option>
                               <?php
-                              $user_id = 0;
+                              $pharmacy_id = 0;
                               if (isset($_SESSION['loginInfo']["id"])) {
-                                $user_id = $_SESSION['loginInfo']["id"];
+                                $pharmacy_id = $_SESSION['loginInfo']["id"];
                               }
 
                               $fetchCatQuerry = "SELECT id, cat_name FROM category WHERE admin_id=1";
@@ -105,29 +106,9 @@ include 'config/dbConn.php';
                         <div class="mb-4 row align-items-center">
                           <label class="col-sm-3 col-form-label form-label-title">Sub Category</label>
                           <div class="col-sm-9">
-                            <select class="js-example-basic-single w-100" name="sub_category">
+                            <select class="js-example-basic-single w-100" name="sub_category" id="subcategorySelect">
                               <option selected>Select Sub Category</option>
-                              <?php
-                              $user_id = 0;
-                              if (isset($_SESSION['loginInfo']["id"])) {
-                                $user_id = $_SESSION['loginInfo']["id"];
-                              }
-
-                              $fetchCatQuerry = "SELECT id, sub_category_name FROM sub_category WHERE pharmacy_id=$user_id";
-                              $querry_result = mysqli_query($conn, $fetchCatQuerry);
-
-                              if ($querry_result == true) {
-                                $count = mysqli_num_rows($querry_result);
-                                $slNo = 1;
-                                if ($count > 0) {
-                                  while ($rows = mysqli_fetch_assoc($querry_result)) {
-                                    $cat_id = $rows['id'];
-                                    $cat_name = $rows['sub_category_name'];
-                                    echo "<option value='$cat_id'>$cat_name</option>";
-                                  }
-                                }
-                              }
-                              ?>
+                             
                             </select>
                           </div>
                         </div>
@@ -193,6 +174,14 @@ include 'config/dbConn.php';
                         </div>
 
                         <div class="mb-4 row align-items-center">
+                          <label class="col-sm-3 form-label-title">Product Quantity</label>
+                          <div class="col-sm-9">
+                            <input class="form-control" name="prod_qty" type="number" 
+                              value="0">
+                          </div>
+                        </div>
+
+                        <div class="mb-4 row align-items-center">
                           <label class="col-sm-3 col-form-label form-label-title">Stock
                             Status</label>
                           <div class="col-sm-9">
@@ -203,6 +192,8 @@ include 'config/dbConn.php';
                             </select>
                           </div>
                         </div>
+
+                        
                       </div>
                     </div>
 
@@ -230,6 +221,25 @@ include 'config/dbConn.php';
     <!-- Page Body End -->
   </div>
   <!-- page-wrapper End-->
+  <script>
+    const handleChangeCategory = (categoryElement) => {
+      const data = {
+        pharmacy_id: <?php echo $pharmacy_id ?>,
+        category_id: categoryElement.value,
+      }
+      console.log(data);
+
+      $.ajax({
+        type: "POST",
+        url: "querryCode/getSubCategory.php",
+        data: data,
+        success: function (response) {
+          console.log(response)
+          $("#subcategorySelect").html(response);
+        },
+      });
+    }
+  </script>
 
   <?php include('includes/scripts.php');
   ?>

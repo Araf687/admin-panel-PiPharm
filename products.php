@@ -83,7 +83,7 @@ include 'config/dbConn.php';
                             <th>Product Name</th>
                             <th>Category</th>
                             <th>Sub Category</th>
-                            <!-- <th>Slug</th> -->
+                            <th>Quantity</th>
                             <th>Price</th>
                             <th>Option</th>
                           </tr>
@@ -101,7 +101,7 @@ include 'config/dbConn.php';
                           $page = isset($_GET['page']) ? $_GET['page'] : 1;
                           $offset = ($page - 1) * $limit;
 
-                          $fetchPrdQuery = "SELECT p.prd_id, p.prd_name, p.prd_image, p.prd_price, p.slug, p.created_date, c.cat_name, sc.sub_category_name
+                          $fetchPrdQuery = "SELECT p.prd_id, p.prd_name, p.prd_image, p.prd_price, p.slug,p.quantity, p.created_date, c.cat_name, sc.sub_category_name
                           FROM product p
                           JOIN category c ON p.prd_cat_id = c.id
                           JOIN sub_category sc ON p.prd_sub_cat_id = sc.id";
@@ -111,19 +111,23 @@ include 'config/dbConn.php';
                           if ($query_result == true) {
 
                             $count = mysqli_num_rows($query_result);
-                            $slNo = 1;
-
+                            $slNo = 0;
+                            echo $count;
                             if ($count > 0) {
+
                               echo "<tbody>";
                               while ($rows = mysqli_fetch_assoc($query_result)) {
+                                $slNo = $slNo+1;
                                 $prd_id = $rows['prd_id'];
                                 $prd_name = $rows['prd_name'];
                                 $prd_image = explode("@", $rows['prd_image']);
                                 $prd_category = $rows['cat_name'];
                                 $prd_sub_category = $rows['sub_category_name'];
                                 $prd_price = $rows['prd_price'];
+                                $quantity = $rows['quantity'];
                                 $prd_slug = $rows['slug'];
                                 $created_date = explode(" ", $rows['created_date']);
+
 
                                 if ($prd_image[0] == '') {
                                   $img_src = "assets/images/product/default-image.jpg";
@@ -139,7 +143,7 @@ include 'config/dbConn.php';
                                   </td>
 
                                   <td>
-                                    <?php echo $prd_name; ?>
+                                    <?php echo $prd_name." ".$slNo; ?>
                                   </td>
 
                                   <td>
@@ -148,9 +152,9 @@ include 'config/dbConn.php';
                                   <td>
                                     <?php echo $prd_sub_category; ?>
                                   </td>
-
-
-
+                                  <td>
+                                    <?php echo $quantity; ?>
+                                  </td>
                                   <td class="td-price">$
                                     <?php echo $prd_price; ?>
                                   </td>

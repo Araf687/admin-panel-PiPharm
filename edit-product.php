@@ -80,6 +80,7 @@ include 'config/dbConn.php';
                           $prd_category = $rows['prd_cat_id'];
                           $prd_sub_category = $rows['prd_sub_cat_id'];
                           $prd_price = $rows['prd_price'];
+                          $quantity = $rows['quantity'];
                           $product_desc = $rows['prd_description'];
                           $prd_status = $rows['prd_status'];
                           ?>
@@ -244,6 +245,14 @@ include 'config/dbConn.php';
                             <div class="card-body">
                               <div class="card-header-2">
                                 <h5>Product Inventory</h5>
+                              </div>
+
+                              <div class="mb-4 row align-items-center">
+                                <label class="col-sm-3 form-label-title">Product Quantity</label>
+                                <div class="col-sm-9">
+                                  <input class="form-control" name="prod_qty" value="<?php echo $quantity; ?>"
+                                    type="number" min="0">
+                                </div>
                               </div>
 
                               <div class="mb-4 row align-items-center">

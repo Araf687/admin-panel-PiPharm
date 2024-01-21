@@ -8,14 +8,16 @@ if (isset($_COOKIE['login_status'])) {
         $description = $_POST['prd_desc'];
         $user_id = $_SESSION['loginInfo']["id"];
         $prd_name = $_POST['prd_name'];
-        $prd_cat = $_POST['category'];
-        $prd_sub_cat = $_POST['sub_category'];
+        $prd_cat =  isset($_POST['category'])?$_POST['category']:0;
+        $prd_sub_cat = isset($_POST['sub_category'])?$_POST['sub_category']:0;
         $prd_price = $_POST['prod_price'];
+        $prd_qty = $_POST['prod_qty'];
         $prd_status = $_POST['status'];
 
         settype($prd_cat, "integer");
         settype($prd_sub_cat, "integer");
         settype($prd_price, "float");
+        settype($prd_qty, "integer");
 
         // product image
         $fileNameAsString = "";
@@ -61,7 +63,7 @@ if (isset($_COOKIE['login_status'])) {
         }
 
 
-        $addPrd_querry = "INSERT INTO product (`prd_image`, `prd_name`, `prd_cat_id`,`prd_sub_cat_id`, `prd_price`, `prd_description`, `slug`, `prd_status`, `pharmacy_id`) VALUES ('$fileNameAsString','$prd_name',$prd_cat, $prd_sub_cat,$prd_price,'$description','$prod_slug','$prd_status','$user_id')";
+        $addPrd_querry = "INSERT INTO product (`prd_image`, `prd_name`, `prd_cat_id`,`prd_sub_cat_id`, `prd_price`,`quantity`, `prd_description`, `slug`, `prd_status`, `pharmacy_id`) VALUES ('$fileNameAsString','$prd_name',$prd_cat, $prd_sub_cat,$prd_price,$prd_qty,'$description','$prod_slug','$prd_status','$user_id')";
 
         $run_addPrdQuerry = mysqli_query($conn, $addPrd_querry);
         if ($run_addPrdQuerry) {
@@ -81,6 +83,7 @@ if (isset($_COOKIE['login_status'])) {
         $prd_cat = $_POST['category'];
         $prd_sub_cat = $_POST['sub_category'];
         $prd_price = $_POST['prod_price'];
+        $prd_qty = $_POST['prod_qty'];
         $prd_status = $_POST['status'];
         $description = $_POST['prd_desc'];
 
@@ -104,7 +107,7 @@ if (isset($_COOKIE['login_status'])) {
 
         if ($prd_image["name"]["0"] == "") {
             // that means user did not change the previous image
-            $updatePrd_query = "UPDATE product SET `prd_name`='$prd_name', `prd_cat_id`=$prd_cat, `prd_sub_cat_id`=$prd_sub_cat, `prd_price`=$prd_price, `prd_description`='$description', `prd_status`='$prd_status' WHERE `prd_id`=$prd_id";
+            $updatePrd_query = "UPDATE product SET `prd_name`='$prd_name', `prd_cat_id`=$prd_cat, `prd_sub_cat_id`=$prd_sub_cat, `prd_price`=$prd_price, `quantity`=$prd_qty, `prd_description`='$description', `prd_status`='$prd_status' WHERE `prd_id`=$prd_id";
 
         } else {
             foreach ($_FILES['files']['tmp_name'] as $key => $tmp_name) {
@@ -135,7 +138,7 @@ if (isset($_COOKIE['login_status'])) {
                 $fileNameAsString = $previousImages . "@" . $fileNameAsString;
             }
 
-            $updatePrd_query = "UPDATE product SET `prd_image`='$fileNameAsString', `prd_name`='$prd_name', `prd_cat_id`=$prd_cat,`prd_sub_cat_id`=$prd_sub_cat, `prd_price`=$prd_price,`prd_description`='$description',`prd_status`='$prd_status' WHERE `prd_id`=$prd_id";
+            $updatePrd_query = "UPDATE product SET `prd_image`='$fileNameAsString', `prd_name`='$prd_name', `prd_cat_id`=$prd_cat,`prd_sub_cat_id`=$prd_sub_cat, `prd_price`=$prd_price,`quantity`=$prd_qty, `prd_description`='$description',`prd_status`='$prd_status' WHERE `prd_id`=$prd_id";
 
         }
 

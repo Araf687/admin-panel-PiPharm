@@ -78,13 +78,14 @@ include('includes/head.php');
 
                                                 <?php
                                                 $admin_id = $_SESSION['loginInfo']["id"];
+                                                $pharmacy_id=$_SESSION['loginInfo']['id'];
                                                 settype($admin_id, "integer");
 
                                                 // $fetchCatQuerry = "SELECT * FROM store WHERE `admin_id`=$admin_id LIMIT 1";
                                                 
-                                                $fetchCatQuerry = "SELECT * FROM pharmacy_admin AS admin
-                                                                    INNER JOIN pharmacy_address AS address
-                                                                     ON admin.id = address.pharmacy_id";
+                                                $fetchCatQuerry ="SELECT pharmacy_admin.*, pharmacy_address.* 
+                                                FROM pharmacy_admin 
+                                                INNER JOIN pharmacy_address ON pharmacy_admin.id = pharmacy_address.pharmacy_id WHERE pharmacy_admin.id=$pharmacy_id";
 
                                                 $querry_result = mysqli_query($conn, $fetchCatQuerry);
 
@@ -124,6 +125,8 @@ include('includes/head.php');
                                                             $longitude = $rows['longitude'];
 
                                                             $latLong = $latitude . " " . $longitude;
+                                                            
+                                                    
 
                                                         }
                                                     }
@@ -176,13 +179,13 @@ include('includes/head.php');
                                                         <label class="col-sm-2 col-form-label form-label-title">Store
                                                             Logo</label>
                                                         <div class="col-sm-6">
-                                                            <input type="text" name="prevLogo" value=<?= $logo ?> class='d-none'>
+                                                            <input type="text" name="prevLogo" value='<?=$logo?>' class='d-none'>
                                                             <input class="form-control form-choose"
                                                                 onChange="handleLogo(event)" name="store_logo"
                                                                 type="file" id="formFileMultiple">
                                                         </div>
                                                         <div class="col-sm-4">
-                                                            <img src="<?php echo $img_src_logo; ?>" alt=""
+                                                            <img src="<?php echo $img_src_logo; ?>" alt="2"
                                                                 class="rounded m-1" id="logoImg" width="100">
                                                         </div>
                                                     </div>
@@ -198,7 +201,7 @@ include('includes/head.php');
                                                                     <p id="image-name">Choose an image file or drag it
                                                                         here.</p>
                                                                 </div>
-                                                                <input type="text" name="prevBanner" value=<?= $banner ?>
+                                                                <input type="text" name="prevBanner" value='<?= $banner ?>'
                                                                     class="d-none">
                                                                 <input type="file" id="bannerInput" name="store_banner"
                                                                     onChange="handleChangeFile(event)"
@@ -231,28 +234,28 @@ include('includes/head.php');
                                                         <div class="col-md-9 col-lg-9">
                                                             <div class="mb-3">
                                                                 <label>Street Address</label>
-                                                                <input name="addr_main" value=<?= $street_address ?>
+                                                                <input name="addr_main" value='<?= $street_address ?>'
                                                                     class="form-control" type="text">
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-md-6 col-lg-6 mb-2">
                                                                     <label>City</label>
-                                                                    <input name="addr_city" value=<?= $city ?>
+                                                                    <input name="addr_city" value='<?= $city ?>'
                                                                         class="form-control" type="text">
                                                                 </div>
                                                                 <div class="col-md-6 col-lg-6 mb-2">
                                                                     <label>State</label>
-                                                                    <input name="addr_state" value=<?= $state ?>
+                                                                    <input name="addr_state" value='<?= $state ?>'
                                                                         class="form-control" type="text">
                                                                 </div>
                                                                 <div class="col-md-6 col-lg-6 mb-2">
                                                                     <label>Country</label>
-                                                                    <input name="addr_country" value=<?= $country ?>
+                                                                    <input name="addr_country" value='<?= $country ?>'
                                                                         class="form-control" type="text">
                                                                 </div>
                                                                 <div class="col-md-6 col-lg-6 mb-2">
                                                                     <label>Zip Code</label>
-                                                                    <input name="addr_zip" value=<?= $zipCode ?>
+                                                                    <input name="addr_zip" value='<?= $zipCode ?>'
                                                                         class="form-control" type="text">
                                                                 </div>
                                                             </div>
