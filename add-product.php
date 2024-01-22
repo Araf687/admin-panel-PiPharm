@@ -77,7 +77,7 @@ include 'config/dbConn.php';
                           <label class="col-sm-3 col-form-label form-label-title">Category</label>
                           <div class="col-sm-9">
                             <select class="js-example-basic-single w-100" name="category"
-                              onchange="handleChangeCategory(this)">
+                              onchange="handleChangeCategory(this)" required>
                               <option selected>Select Category</option>
                               <?php
                               $pharmacy_id = 0;

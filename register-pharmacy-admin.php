@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="assets/images/favicon/medicine.png" type="image/x-icon">
     <link rel="shortcut icon" href="assets/images/favicon/medicine.png" type="image/x-icon">
-    <title>Order Management System</title>
+    <title>PiPharma Admin Panel</title>
 
     <!-- Google font-->
     <link

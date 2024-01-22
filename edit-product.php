@@ -104,7 +104,7 @@ include 'config/dbConn.php';
                               <div class="mb-4 row align-items-center">
                                 <label class="col-sm-3 col-form-label form-label-title">Category</label>
                                 <div class="col-sm-9">
-                                  <select class="js-example-basic-single w-100" name="category">
+                                  <select class="js-example-basic-single w-100" name="category" required>
                                     <?php
                                     $user_id = $_SESSION['loginInfo']["id"];
 

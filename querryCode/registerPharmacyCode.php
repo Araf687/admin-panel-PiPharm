@@ -21,7 +21,7 @@ if (isset($_POST['registerPharmacyButton'])) {
 
         $registerPharmacySql = "INSERT INTO pharmacy_admin 
         (`first_name`, `last_name`, `admin_email`, `admin_phone`,`admin_pass`, `admin_type`,`admin_img` ,`shop_name`,`shop_image`,`brand_logo`,`status`,`created_by`)
-         VALUES ('$adminFirstName','$adminLastName','$admin_email','','$pass','pharmacy',' ',' ',' ',' ','Not Approved',0)";
+         VALUES ('$adminFirstName','$adminLastName','$admin_email','','$pass','pharmacy',' ','$pharmacy_name',' ',' ','Not Approved',0)";
 
         $registerPharmacyResult = mysqli_query($conn, $registerPharmacySql);
 

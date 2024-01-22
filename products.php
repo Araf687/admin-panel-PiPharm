@@ -104,7 +104,7 @@ include 'config/dbConn.php';
                           $fetchPrdQuery = "SELECT p.prd_id, p.prd_name, p.prd_image, p.prd_price, p.slug,p.quantity, p.created_date, c.cat_name, sc.sub_category_name
                           FROM product p
                           JOIN category c ON p.prd_cat_id = c.id
-                          JOIN sub_category sc ON p.prd_sub_cat_id = sc.id";
+                          Left JOIN sub_category sc ON p.prd_sub_cat_id = sc.id";
 
                           $query_result = mysqli_query($conn, $fetchPrdQuery);
                           $count = 0;
