@@ -1,6 +1,19 @@
 <?php
+
+// import 
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../PHPMailer-master/src/Exception.php';
+require '../PHPMailer-master/src/PHPMailer.php';
+require '../PHPMailer-master/src/SMTP.php';
+
+
+
+
 // Function to delete image
-function deleteImageFromFolder($prevImageName , $folderPath)
+function deleteImageFromFolder($prevImageName, $folderPath)
 {
 
     if ($prevImageName) {
@@ -12,7 +25,7 @@ function deleteImageFromFolder($prevImageName , $folderPath)
         if (file_exists($filePath)) {
             // Attempt to delete the file
             unlink($filePath);
-        } 
+        }
     }
 
 }
@@ -20,12 +33,9 @@ function deleteImageFromFolder($prevImageName , $folderPath)
 // Function to upload an image to a folder
 function uploadImage($filename, $targetFolder, $targetedFile)
 {
-     // Set the destination path
-     $destination = $targetFolder . $filename;
-     // Move the file to the destination
-     move_uploaded_file($targetedFile, $destination);
+    // Set the destination path
+    $destination = $targetFolder . $filename;
+    // Move the file to the destination
+    move_uploaded_file($targetedFile, $destination);
 }
 
-function sendMail(){
-
-}

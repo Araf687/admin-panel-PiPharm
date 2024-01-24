@@ -78,6 +78,7 @@ include 'config/dbConn.php';
                                 $pay_method = $rows['payment_method'];
                                 $status = $rows['delivery_status'];
                                 $orderStatus = $rows['order_status'];
+                                $customer_id = $rows['cust_id'];
 
                                 $exploded_date = explode(" ", $ord_date);
                                 $newDate = date("jS F Y", strtotime($exploded_date[0]));
@@ -95,13 +96,15 @@ include 'config/dbConn.php';
                                   <td>
                                     <?php echo $pay_method; ?>
                                   </td>
-                                  <td class="<?php echo "order-".strtolower($orderStatus); ?>" id='<?= $ord_id . "-ordStatus" ?>'>
+                                  <td class="<?php echo "order-" . strtolower($orderStatus); ?>"
+                                    id='<?= $ord_id . "-ordStatus" ?>'>
                                     <span id='<?= $ord_id . "_ord_span" ?>'>
                                       <?php echo $orderStatus; ?>
                                     </span>
                                   </td>
 
-                                  <td class="<?php echo "delivery-" . str_replace(" ", "-", strtolower($status)); ?>" id='<?= $ord_id."_deliveryStatus" ?>'>
+                                  <td class="<?php echo "delivery-" . str_replace(" ", "-", strtolower($status)); ?>"
+                                    id='<?= $ord_id . "_deliveryStatus" ?>'>
                                     <span id='<?= $ord_id . "_deliver_span" ?>'>
                                       <?php echo $status; ?>
                                     </span>
@@ -126,11 +129,16 @@ include 'config/dbConn.php';
                                         <!-- Button trigger modal -->
                                         <a href="javascript:void(0)" data-bs-toggle="modal"
                                           data-bs-target="#exampleEditOrderModal"
-                                          onclick="setDefaultStatus('<?=$status?>' , '<?=$orderStatus?>')"
-                                        >
+                                          onclick="setDefaultStatus('<?= $status ?>' , '<?= $orderStatus ?>')">
                                           <i class="ri-edit-2-line" style="color:#009289;"></i>
                                         </a>
 
+                                      </li>
+                                      <li>
+                                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#sendMailToggle"
+                                          onclick="handleClickSendEmail('<?= $customer_id ?>','<?= $ord_id ?>')">
+                                          <i class="ri-mail-line" style="color:#00ACC1;"></i>
+                                        </a>
                                       </li>
 
                                       <li>
@@ -140,7 +148,6 @@ include 'config/dbConn.php';
                                           <i class="ri-delete-bin-line"></i>
                                         </a>
                                       </li>
-
                                     </ul>
                                   </td>
                                 </tr>
@@ -164,8 +171,8 @@ include 'config/dbConn.php';
             sessionStorage.setItem("del_id", ordId);
 
           }
-          const setDefaultStatus = (deliveryStatus,orderStatus) => {
-            console.log(deliveryStatus,orderStatus,deliveryStatus.toLowerCase())
+          const setDefaultStatus = (deliveryStatus, orderStatus) => {
+            console.log(deliveryStatus, orderStatus, deliveryStatus.toLowerCase())
             $('#deliveryStatus').val(deliveryStatus.toLowerCase());
             $('#ordStatus').val(orderStatus.toLowerCase());
           }
@@ -195,9 +202,9 @@ include 'config/dbConn.php';
 
                 if (jsonData?.isSuccess) {
                   console.log(jsonData);
-                  const { orderId, deliveryStatus,orderStatus } = jsonData.data;
+                  const { orderId, deliveryStatus, orderStatus } = jsonData.data;
 
-                  console.log(orderId, deliveryStatus,orderStatus,`delivery-${deliveryStatus.toLowerCase()}`)
+                  console.log(orderId, deliveryStatus, orderStatus, `delivery-${deliveryStatus.toLowerCase()}`)
 
                   $(`#${orderId}-ordStatus`).removeClass().addClass(`order-${orderStatus.toLowerCase()}`);
                   $(`#${orderId}_ord_span`).text(orderStatus);
@@ -232,6 +239,61 @@ include 'config/dbConn.php';
             });
           })
 
+          const handleClickSendEmail = (customerId, orderId) => {
+            $('#orderId_Input').val(orderId)
+            $('#customerId_Input').val(customerId);
+
+            console.log(customerId, orderId);
+          }
+
+          const sendEmailToCustomer = () => {
+            const orderId = $('#orderId_Input').val();
+            const customerId = $('#customerId_Input').val();
+
+            const data = {
+              orderId: orderId,
+              customerId: customerId,
+            }
+
+            $.ajax({
+              url: "querryCode/sendMailCode.php",
+              type: "POST",
+              data: data,
+              success: function (response) {
+                const jsonData = $.parseJSON(response);
+
+
+                console.log(jsonData);
+
+                if (jsonData.isSuccess) {
+                  $('#loaderCancelBTN').click();
+                  Swal.fire({
+                    title: "Great job!",
+                    text: "Mail sended successfully to customer!",
+                    icon: "success"
+                  });
+                }
+
+
+
+
+              },
+              error: function (xhr, status, error) {
+                // Handle errors
+                console.log("AJAX request failed:", status, error);
+                console.log(xhr.responseText);
+
+                Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "Something went wrong! Failed to send email.",
+                });
+              }
+            });
+
+          }
+
+
 
 
         </script>
@@ -265,7 +327,7 @@ include 'config/dbConn.php';
             <input type="text" name="order_id" value=<?= $ord_id ?> style="display:none">
             <p class="mb-0">Order Status</p>
             <div class="remove-box d-flex justify-content-center mb-3">
-              
+
               <select class="form-select" id="ordStatus" name="ordStatus" aria-label="Default select example"
                 style="border-radius:10px">
                 <option selected>Select Order Status</option>
@@ -297,6 +359,60 @@ include 'config/dbConn.php';
 
     </div>
   </div>
+
+
+  <!-- modal  -->
+  <!-- send mail -->
+  <div class="modal fade theme-modal remove-coupon" id="sendMailToggle" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header d-block text-center">
+          <h5 class="modal-title w-100" id="exampleModalLabel22">Are You Sure ?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="remove-box">
+            <p>Send the delivery confirmation email to Customer.</p>
+            <input type="text" class='d-none' id="orderId_Input">
+            <input type="text" class='d-none' id="customerId_Input">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-animation btn-md fw-bold" data-bs-dismiss="modal">No</button>
+          <button type="button" class="btn btn-animation btn-md fw-bold" onClick="sendEmailToCustomer()"
+            data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#loaderModal">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- loader modal -->
+  <div class="modal fade theme-modal remove-coupon" id="loaderModal" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header d-block text-center">
+
+        </div>
+        <div class="modal-body text-center ">
+          <div class="spinner-border text-success p-4" role="status">
+            <span class="sr-only">Loading...</span>
+            
+          </div>
+          <p>Loading...</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="loaderCancelBTN" class="btn btn-animation btn-md fw-bold d-none"
+            data-bs-dismiss="modal">No</button>
+
+        </div>
+      </div>
+    </div>
+
+
+
+
 
 
 
