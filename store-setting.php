@@ -283,7 +283,7 @@ include('includes/head.php');
 
                                                             </div>
                                                             <div id="map" class="my-2 rounded shadow"
-                                                                style="height:450px;opacity: 0.5; pointer-events: none;">
+                                                                style="height:450px;opacity: 0.5; pointer-events: none; z-index: 1;">
                                                             </div>
 
                                                             <p class="text-center" style="font-size:18px">You can also

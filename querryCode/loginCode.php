@@ -22,6 +22,7 @@ if (isset($_POST['loginBTN'])) {
 
         if (password_verify($login_pass, $row['admin_pass'])) {
 
+
             if ($row['status'] == "Active" || $row['admin_type'] == "admin" ) {
                 $_SESSION['loginInfo'] = array(
                     "id" => $row['id'],
@@ -52,8 +53,6 @@ if (isset($_POST['loginBTN'])) {
 
         } else {
             $_SESSION['status'] = "failed";
-
-            var_dump(password_verify($login_pass, $row['admin_pass']));
 
 
             // echo "Incprrect Password"."--".$login_pass."@". $row['admin_pass'] ."|| ";

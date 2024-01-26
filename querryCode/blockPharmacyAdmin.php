@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         settype($pharmacy_admin_id, "integer");
 
 
-        $sql = "UPDATE pharmacy_admin SET  `status`=' $status' WHERE `id`=$pharmacy_admin_id";
+        $sql = "UPDATE pharmacy_admin SET  `status`='$status' WHERE `id`=$pharmacy_admin_id";
 
         $result = mysqli_query($conn, $sql);
 

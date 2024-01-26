@@ -1,5 +1,5 @@
 <!-- Page Header Start-->
-<div class="page-header">
+<div class="page-header" style="z-index:100">
   <div class="header-wrapper m-0">
     <div class="header-logo-wrapper p-0">
       <div class="logo-wrapper">
