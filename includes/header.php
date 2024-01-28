@@ -65,7 +65,7 @@
         <li class="profile-nav onhover-dropdown pe-0 me-0">
           <div class="media profile-media">
             <?php
-            $admin_img = "assets/images/admins/1676717087.png";
+            $admin_img = "assets/images/default.jpg";
             $isPharmacyAdmin = $_SESSION['loginInfo']['adminType'] === "pharmacy";
             if (isset($_SESSION['loginInfo']['adminImg']) && $_SESSION['loginInfo']['adminImg']!=' ') {
               $admin_img = $isPharmacyAdmin ? "assets/images/pharmacy_admins/" . $_SESSION['loginInfo']['adminImg'] : "assets/images/admins/" . $_SESSION['loginInfo']['adminImg'];

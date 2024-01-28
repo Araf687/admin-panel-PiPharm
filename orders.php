@@ -9,6 +9,30 @@ include 'config/dbConn.php';
 ?>
 
 <body>
+
+<?php
+if (isset($_SESSION['status'])) {
+
+  if ($_SESSION['status'] == "delete") {
+    echo "<script>Swal.fire(
+        'Great!',
+        'Delete Successfully!',
+        'success'
+    );
+    </script>";
+  }
+  else {
+    echo "<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something Went Wrong!',
+      })
+    </script>";
+  }
+  unset($_SESSION['status']);
+}
+?>
   <!-- tap on top start -->
   <div class="tap-top">
     <span class="lnr lnr-chevron-up"></span>
@@ -143,7 +167,7 @@ include 'config/dbConn.php';
 
                                       <li>
                                         <a href="javascript:void(0)"
-                                          onClick="<?php echo "del_product(" . "\"$ord_code\"" . ")"; ?>"
+                                          onClick="<?php echo "del_product('$ord_code')"; ?>"
                                           data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
                                           <i class="ri-delete-bin-line"></i>
                                         </a>

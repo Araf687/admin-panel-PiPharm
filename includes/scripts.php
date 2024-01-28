@@ -221,7 +221,7 @@
     } else if (tableName == "product") {
       window.location = "querryCode/productCode.php?del_id=" + del_id;
     } else if (tableName == "order") {
-      window.location = "querryCode/orderCode.php?del_id=" + del_id;
+      window.location = `querryCode/orderCode.php?del_id=${del_id}`;
     } 
     else if (tableName == "slider") {
       window.location = "querryCode/slideCode.php?del_id=" + del_id;
