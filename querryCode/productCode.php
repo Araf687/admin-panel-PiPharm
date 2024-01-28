@@ -120,7 +120,7 @@ if (isset($_COOKIE['login_status'])) {
                     $new_file_name = time() . '-' . $_FILES['files']['name'][$key];
 
                     if ($fileNameAsString == "") {
-                        $fileNameAsString = $fileNameAsString . $new_file_name;
+                        $fileNameAsString =  $new_file_name;
                     } else {
                         $fileNameAsString = $fileNameAsString . "@" . $new_file_name;
                     }
