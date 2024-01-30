@@ -157,11 +157,11 @@ include 'config/dbConn.php';
                         <div class="mb-4 row align-items-center">
                           <label class="col-sm-3 col-form-label form-label-title">Images ( Multiple )</label>
                           <div class="col-sm-9">
-                            <input class="form-control form-choose" onChange="handleChangeFile(event)" name="files[]"
-                              multiple="multiple" type="file" id="formFile">
+                            <input class="form-control form-choose" onChange="handleChangeFile(event)" name="product_image"
+                               type="file" id="formFile">
                           </div>
                           <div class="col-sm-9 mt-4" id="prd_img_section">
-                            <!-- <img src = "" id = "prd_img" style = "display:none" class = "img-fluid mt-1" width = "100"> -->
+                            <img src="" id ="prd_img" class ="img-fluid mt-1" width = "100">
                           </div>
                         </div>
                       </div>

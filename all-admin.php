@@ -1,42 +1,54 @@
 <?php
 include 'config/session.php';
 include 'config/dbConn.php';
-if ( isset( $_SESSION['status'] ) ) {
 
-    if ( $_SESSION['status'] == "updated" ) {
-        echo "<script>Swal.fire(
-              'Great!',
-              'Admin Updated Successfully!',
-              'success'
-          );
-          </script>";
-    }
-    else if ( $_SESSION['status'] == "added" ) {
-        echo "<script>Swal.fire(
-              'Great!',
-              'Admin Added Successfully!',
-              'success'
-          );
-          </script>";
-    }
-    else if ( $_SESSION['status'] == "Deleted Successfully" ) {
-        echo "<script>Swal.fire(
-              'Great!',
-              'Admin Deleted Successfully!',
-              'success'
-          );
-          </script>";
-    }
-    unset( $_SESSION['status'] );
-}
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
-<?php include( 'includes/head.php' );
+<?php include('includes/head.php');
 ?>
 
 <body>
+    <?php
+    if (isset($_SESSION['status'])) {
+
+        if ($_SESSION['status'] == "updated admin") {
+            echo "<script>Swal.fire(
+            'Great!',
+            'Updated Admin Successfully!',
+            'success'
+        );
+        </script>";
+        }
+        else if ($_SESSION['status'] == "added") {
+            echo "<script>Swal.fire(
+                  'Great!',
+                  'Admin Added Successfully!',
+                  'success'
+              );
+              </script>";
+        }
+        else if ($_SESSION['status'] == "Deleted Successfully") {
+            echo "<script>Swal.fire(
+                  'Great!',
+                  'Admin Deleted Successfully!',
+                  'success'
+              );
+              </script>";
+        }
+        else if ($_SESSION['status'] == "something went wrong") {
+            echo "<script>Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+
+          });
+        </script>";
+        }
+        unset($_SESSION['status']);
+    }
+    ?>
 
     <!-- tap on top start -->
     <div class="tap-top">
@@ -46,13 +58,13 @@ if ( isset( $_SESSION['status'] ) ) {
 
     <!-- page-wrapper Start-->
     <div class="page-wrapper compact-wrapper" id="pageWrapper">
-        <?php include( 'includes/header.php' );
-?>
+        <?php include('includes/header.php');
+        ?>
 
         <!-- Page Body Start-->
         <div class="page-body-wrapper">
-            <?php include( 'includes/sidebar.php' );
-?>
+            <?php include('includes/sidebar.php');
+            ?>
 
             <!-- Container-fluid starts-->
             <div class="page-body">
@@ -84,58 +96,62 @@ if ( isset( $_SESSION['status'] ) ) {
 
                                             <tbody>
                                                 <?php
-                                                  $admin_id = $_SESSION['loginInfo']["id"];
-                                                  settype( $admin_id, "integer" );
+                                                $admin_id = $_SESSION['loginInfo']["id"];
+                                                settype($admin_id, "integer");
 
-                                                  $fetchUserQuerry = "SELECT * FROM admin";
-                                                  $querry_result = mysqli_query( $conn, $fetchUserQuerry );
+                                                $fetchUserQuerry = "SELECT * FROM admin";
+                                                $querry_result = mysqli_query($conn, $fetchUserQuerry);
 
-                                                  if ( $querry_result == true ) {
-                                                      $count = mysqli_num_rows( $querry_result );
-                                                      $slNo = 1;
+                                                if ($querry_result == true) {
+                                                    $count = mysqli_num_rows($querry_result);
+                                                    $slNo = 1;
 
-                                                      if ( $count>0 ) {
-                                                          echo "<tbody>";
-                                                          while( $rows = mysqli_fetch_assoc( $querry_result ) ) {
-                                                              // user_name	user_email	user_type	user_pass
-                                                              $admin_id = $rows['id'];
-                                                              $admin_firstName = $rows['first_name'];
-                                                              $admin_lastName = $rows['last_name'];
-                                                              $admin_email = $rows['admin_email'];
-                                                              $admin_img = $rows['admin_img'];
-                                                              $imgSrc=$admin_img?"assets/images/admins/".$admin_img:"assets/images/profile/1.jpg";
-                                                              // $user_type = $rows['user_type'];
-                                                              ?>
-                                                <tr>
-                                                    <td class="text-center">
-                                                        <img src=<?=$imgSrc?> alt="" height="50">
-                                                    </td>
-                                                    <td >
-                                                        <?php echo $admin_firstName." ".$admin_lastName; ?>
-                                                    </td>
+                                                    if ($count > 0) {
+                                                        echo "<tbody>";
+                                                        while ($rows = mysqli_fetch_assoc($querry_result)) {
+                                                            // user_name	user_email	user_type	user_pass
+                                                            $admin_id = $rows['id'];
+                                                            $admin_firstName = $rows['first_name'];
+                                                            $admin_lastName = $rows['last_name'];
+                                                            $admin_email = $rows['admin_email'];
+                                                            $admin_img = $rows['admin_img'];
+                                                            $imgSrc = $admin_img ? "assets/images/admins/" . $admin_img : "assets/images/profile/1.jpg";
+                                                            // $user_type = $rows['user_type'];
+                                                            ?>
+                                                            <tr>
+                                                                <td class="text-center">
+                                                                    <img src=<?= $imgSrc ?> alt="" height="50">
+                                                                </td>
+                                                                <td>
+                                                                    <?php echo $admin_firstName . " " . $admin_lastName; ?>
+                                                                </td>
 
-                                                    <td><?php echo $admin_email; ?></td>
+                                                                <td>
+                                                                    <?php echo $admin_email; ?>
+                                                                </td>
 
-                                                    <td>
-                                                        <ul>
-                                                            <li>
-                                                                <a
-                                                                    href="<?php echo "edit-admin.php?admin_id=".$admin_id?>">
-                                                                    <i class="ri-pencil-line"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="javascript:void(0)"
-                                                                    onClick="<?php echo "del_admin( ".$admin_id." )"; ?>"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#exampleModalToggle">
-                                                                    <i class="ri-delete-bin-line"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-                                                <?php } } } ?>
+                                                                <td>
+                                                                    <ul>
+                                                                        <li>
+                                                                            <a
+                                                                                href="<?php echo "edit-admin.php?admin_id=" . $admin_id ?>">
+                                                                                <i class="ri-pencil-line"></i>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="javascript:void(0)"
+                                                                                onClick="<?php echo "del_admin( " . $admin_id . " )"; ?>"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#exampleModalToggle">
+                                                                                <i class="ri-delete-bin-line"></i>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </td>
+                                                            </tr>
+                                                        <?php }
+                                                    }
+                                                } ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -146,16 +162,16 @@ if ( isset( $_SESSION['status'] ) ) {
                 </div>
                 <!-- All User Table Ends-->
                 <script>
-                const del_admin = (admin_id) => {
-                    console.log(admin_id);
-                    sessionStorage.setItem("tableName", "admin");
-                    sessionStorage.setItem("del_id", admin_id);
+                    const del_admin = (admin_id) => {
+                        console.log(admin_id);
+                        sessionStorage.setItem("tableName", "admin");
+                        sessionStorage.setItem("del_id", admin_id);
 
-                }
+                    }
                 </script>
 
-                <?php include( 'includes/footer.php' );
-?>
+                <?php include('includes/footer.php');
+                ?>
             </div>
             <!-- index body end -->
 
@@ -163,8 +179,8 @@ if ( isset( $_SESSION['status'] ) ) {
         <!-- Page Body End -->
     </div>
     <!-- page-wrapper End-->
-    <?php include( 'includes/scripts.php' );
-?>
+    <?php include('includes/scripts.php');
+    ?>
 </body>
 
 </html>

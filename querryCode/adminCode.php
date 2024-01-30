@@ -63,58 +63,44 @@ if (isset($_COOKIE['login_status'])) {
             $_SESSION['status'] = "password does not match";
             header("Location: ../add-admin.php");
         }
-    } else if (isset($_POST['UpdateUser'])) {
-        $user_id = $_POST['user_id'];
+    } else if (isset($_POST['editAdmin'])) {
+        $admin_id = $_POST['admin_id'];
         $admin_firstName = $_POST['firstName'];
         $admin_lastName = $_POST['lastName'];
         $admin_email = $_POST['emailAddr'];
-        $admin_pass = $_POST['pass'];
-        $admin_confirm_pass = $_POST['confirm_pass'];
-        $admin_id = $_SESSION['loginInfo']["id"];
+        $admin_img = $_FILES['admin_img']['name'];
+
         settype($admin_id, "integer");
 
-        settype($user_id, "integer");
+         // image 
+         $filename = '';
+         if ($admin_img != '') {
+             $allowed_extension = array('png', 'jpg', 'jpeg');
+             $file_extension = pathinfo($admin_img, PATHINFO_EXTENSION);
+             $filename = time() . '.' . $file_extension;
+         }
 
-        $noOfAddress = $_POST['noOfAddress'];
-        settype($noOfAddress, "integer");
 
-        if ($admin_pass == $admin_confirm_pass) {
-            $updateUser_querry = "UPDATE user SET `first_name`='$admin_firstName', `last_name`='$admin_lastName',`admin_email`='$admin_email', `admin_pass`='admin_pass' WHERE `id`=$user_id";
-            ;
 
-            $run_updateUserQuerry = mysqli_query($conn, $updateUser_querry);
-            if ($run_updateUserQuerry) {
-                $deletePrevUserAddr = "DELETE FROM user_address WHERE user_id=$user_id";
-                $run_query = mysqli_query($conn, $deletePrevUserAddr);
-                if ($run_query) {
-                    for ($i = 1; $i <= $noOfAddress; $i++) {
-                        if (isset($_POST["addr$i" . "_main"])) {
-                            $mainAddr = $_POST["addr$i" . "_main"];
-                            $country = $_POST["addr$i" . "_country"];
-                            $city = $_POST["addr$i" . "_city"];
-                            $state = $_POST["addr$i" . "_state"];
-                            $zipCode = $_POST["addr$i" . "_zip"];
+        $query1 = "UPDATE admin SET `first_name`='$admin_firstName', `last_name`='$admin_lastName',`admin_email`='$admin_email' WHERE `id`=$admin_id";
 
-                            $addUserAddress_querry = "INSERT INTO user_address (`user_id`, `admin_id`, `address`, `city`, `state`, `country`, `zip_code`) VALUES ($user_id, $admin_id,'$mainAddr', '$city','$state', '$country', '$zipCode')";
+        $query2 = "UPDATE admin SET `first_name`='$admin_firstName', `last_name`='$admin_lastName',`admin_email`='$admin_email', `admin_img`='$filename' WHERE `id`=$admin_id";
 
-                            $run_addUserAddrQuerry = mysqli_query($conn, $addUserAddress_querry);
-                            if ($run_addUserAddrQuerry) {
-                                $_SESSION['status'] = "updated";
-                            }
-                        }
-                    }
-                } else {
-                    $_SESSION['status'] = "user address not found";
-                }
-                header("Location: ../users.php");
-            } else {
-                $_SESSION['status'] = "something went wrong";
-                header("Location: ../users.php");
+        $updateAdmin_querry= $filename ==''?$query1:$query2;
+        
+
+        $run_updateUserQuerry = mysqli_query($conn, $updateAdmin_querry);
+        if ($run_updateUserQuerry) {
+            if ($filename != '') {
+                $_SESSION['status'] = "updated admin";
+                move_uploaded_file($_FILES['admin_img']['tmp_name'], '../assets/images/admins/' . $filename);
             }
+            header("Location: ../all-admin.php");
         } else {
-            $_SESSION['status'] = "password does not match";
-            header("Location: ../users.php");
+            $_SESSION['status'] = "something went wrong";
+            header("Location: ../all-admin.php");
         }
+
 
     } else if (isset($_GET['del_id'])) {
         $user_id = $_GET['del_id'];

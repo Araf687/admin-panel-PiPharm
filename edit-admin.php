@@ -87,6 +87,7 @@ include 'config/dbConn.php';
                                                     </div>
 
                                                     <div class="row">
+                                                        <input type="number" name='admin_id' value='<?=$admin_id?>' class="d-none">
                                                         <div class="mb-4 row align-items-center">
                                                             <label class="form-label-title col-lg-3 col-md-3 mb-0">
                                                                 Photo</label>
@@ -131,26 +132,6 @@ include 'config/dbConn.php';
                                                                 <input name="phone" class="form-control" type="text" value='<?=$phone?>'>
                                                             </div>
                                                         </div>
-                                                        <!-- <div class="mb-4 row align-items-center">
-                                                        <label
-                                                            class="col-lg-3 col-md-3 col-form-label form-label-title">Password</label>
-                                                        <div class="col-md-9 col-lg-9">
-                                                            <input name="pass" id="pass" onChange="checkPass(event)"
-                                                                class="form-control" type="password">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="mb-4 row align-items-center">
-                                                        <label
-                                                            class="col-lg-3 col-md-3 col-form-label form-label-title">Confirm
-                                                            Password</label>
-                                                        <div class="col-md-9 col-lg-9">
-                                                            <input class="form-control" name="confirm_pass"
-                                                                id="confirmPass" onChange="isPassMatched(event)"
-                                                                type="password">
-                                                            <p id="notifyMatchPass" class="text-danger"></p>
-                                                        </div>
-                                                    </div> -->
                                                     </div>
                                                 </div>
                                                 <?php
@@ -161,7 +142,7 @@ include 'config/dbConn.php';
 
                                         </div>
 
-                                        <button name="addAdmin" type="submit"
+                                        <button name="editAdmin" type="submit"
                                             class="btn ms-auto theme-bg-color my-2 text-white"
                                             style="margin-right:20px;">Submit</button>
                                     </form>

@@ -70,6 +70,7 @@ if ( isset( $_COOKIE['login_status'] ) ) {
             $updateCat_querry = "UPDATE category SET `cat_name`='$cat_name',`cat_image`='$filename', `is_featured`=$isFeatured WHERE `id`=$cat_id";
             
         }
+        
         $run_updateCatQuerry = mysqli_query( $conn, $updateCat_querry );
         if ( $run_updateCatQuerry ) {
             $_SESSION['status'] = "Updated Successfully";

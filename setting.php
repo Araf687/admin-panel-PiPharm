@@ -20,6 +20,15 @@ if ( isset( $_SESSION['status'] ) ) {
         );
         </script>";
     }
+    if ( $_SESSION['status'] == "something went wrong" ) {
+        echo "<script>Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+
+          });
+        </script>";
+    }
     unset( $_SESSION['status'] );
 }
 ?>
@@ -65,8 +74,6 @@ if ( isset( $_SESSION['status'] ) ) {
                                                 <?php
                                                     $admin_id = $_SESSION['loginInfo']["id"];
                                                     settype( $admin_id, "integer" );
-
-
 
                                                     $fetchCatQuerry = "SELECT * FROM ".$tableName." WHERE `id`=$admin_id LIMIT 1";
                                                     $querry_result = mysqli_query( $conn, $fetchCatQuerry );
@@ -151,15 +158,6 @@ if ( isset( $_SESSION['status'] ) ) {
                                                         <div class="col-sm-4">
                                                             <img src="<?php echo $img_src;?>" id="admin_img"
                                                                 class="img-fluid mt-1" width="50">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="mb-4 row align-items-center">
-                                                        <label class="form-label-title col-sm-2 mb-0">Password</label>
-                                                        <div class="col-sm-10">
-                                                            <input class="form-control" type="password"
-                                                                value=<?=$admin_pass?> name="pass" id="pass"
-                                                                placeholder="Enter Your Password">
                                                         </div>
                                                     </div>
 

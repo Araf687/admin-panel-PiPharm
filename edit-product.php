@@ -76,13 +76,15 @@ include 'config/dbConn.php';
                         while ($rows = mysqli_fetch_assoc($query_result)) {
                           $prd_name = $rows['prd_name'];
                           $imgString = $rows['prd_image'];
-                          $prd_image = explode("@", $imgString);
+                          $prd_image =  $rows['prd_image'];
                           $prd_category = $rows['prd_cat_id'];
                           $prd_sub_category = $rows['prd_sub_cat_id'];
                           $prd_price = $rows['prd_price'];
                           $quantity = $rows['quantity'];
                           $product_desc = $rows['prd_description'];
                           $prd_status = $rows['prd_status'];
+
+                          $img_src = $prd_image ? "assets/images/product/" . $prd_image : "";
                           ?>
                           <div class="card">
                             <div class="card-body">
@@ -141,7 +143,7 @@ include 'config/dbConn.php';
 
                                     $fetchSubCatQuerry = "SELECT * FROM sub_category WHERE `pharmacy_id`=$user_id";
                                     $querry_result2 = mysqli_query($conn, $fetchSubCatQuerry);
-                                    $subCatOpt=$subCatOptSelected=" ";
+                                    $subCatOpt = $subCatOptSelected = " ";
 
                                     if ($querry_result2 == true) {
 
@@ -154,7 +156,7 @@ include 'config/dbConn.php';
                                           if ($sub_cat_id == $prd_sub_category) {
                                             $subCatOptSelected = "<option value=$sub_cat_id selected>$sub_cat_name</option>";
                                           } else {
-                                       
+
                                             $subCatopt = $subCatOpt . "<option value=$sub_cat_id>$sub_cat_name</option>";
                                           }
                                         }
@@ -166,7 +168,7 @@ include 'config/dbConn.php';
                                   </select>
                                 </div>
                               </div>
-                    
+
 
                               <div class="mb-4 row align-items-center">
                                 <label class="col-sm-3 form-label-title">Product Price</label>
@@ -212,30 +214,22 @@ include 'config/dbConn.php';
                               </div>
 
                               <div class="mb-4 row align-items-center">
-                                <label class="col-sm-3 col-form-label form-label-title">Images ( Multiple )</label>
+                                <label class="col-sm-3 col-form-label form-label-title">Image</label>
 
                                 <!-- set previous image names to hidden as if we concatanate them with the newer images -->
                                 <input style="display:none" value="<?php echo $imgString; ?>" name="prev_img" type="text">
 
                                 <div class="col-sm-9">
-                                  <input class="form-control form-choose" onChange="handleChangeFile(event)" name="files[]"
-                                    multiple="multiple" type="file" id="formFile">
+                                  <input class="form-control form-choose" onChange="handleChangeFile(event)"
+                                    name="product_image" type="file" id="formFile">
                                 </div>
                                 <div class="col-sm-9 mt-4" id="prd_img_section">
-                                  <!-- solved the problem as per instruction -->
-                                  <?php
-                                  foreach ($prd_image as $p_image) {
-                                    if ($prd_image[0]) {
-                                      $img_src = $prd_image[0] ? "assets/images/product/" . $p_image : "";
-                                      ?>
-                                      <!-- //problem = ---------------- -->
-                                      <div class="imgContainerProd">
-                                        <img src="<?php echo $img_src; ?>" id="prd_img" class="img-fluid mt-1" width="100">
-                                        <i class="ri-close-line crossButton" onclick="handleRemoveImg(this,'old')"></i>
-                                      </div>
-                                    <?php }
-                                  }
-                                  ?>
+
+                                  <div class="imgContainerProd">
+                                    <img src="<?php echo $img_src; ?>" id="prd_img" class="img-fluid mt-1" width="100">
+                                  </div>
+
+
                                 </div>
                               </div>
                             </div>
@@ -250,8 +244,8 @@ include 'config/dbConn.php';
                               <div class="mb-4 row align-items-center">
                                 <label class="col-sm-3 form-label-title">Product Quantity</label>
                                 <div class="col-sm-9">
-                                  <input class="form-control" name="prod_qty" value="<?php echo $quantity; ?>"
-                                    type="number" min="0">
+                                  <input class="form-control" name="prod_qty" value="<?php echo $quantity; ?>" type="number"
+                                    min="0">
                                 </div>
                               </div>
 

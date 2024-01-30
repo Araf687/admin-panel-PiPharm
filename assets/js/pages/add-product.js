@@ -1,26 +1,12 @@
 
 const handleChangeFile = (event) => {
-  let imgSection = document.getElementById('prd_img_section');
-  imgSection.innerHTML = " ";
+  let preview = document.getElementById("prd_img");
 
-  const length = event.target.files.length;
-  let i = 0;
-  for (i = 0; i < length; i++) {
-
-    var preview = document.createElement("img");
-    preview.className = "img-fluid mt-1";
-    preview.width = "100";
-    preview.style.margin = "7px";
-
-    preview.src = URL.createObjectURL(event.target.files[i]);
-    preview.onload = function () {
-      URL.revokeObjectURL(preview.src) // free memory
-    }
-
-    imgSection.appendChild(preview);
-  }
-  var file = document.getElementById("formFile");
-  console.log("file", file);
+  console.log(event.target.files[0]);
+  preview.src = URL.createObjectURL(event.target.files[0]);
+  preview.onload = function () {
+    URL.revokeObjectURL(preview.src); // free memory
+  };
 }
 
 

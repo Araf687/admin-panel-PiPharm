@@ -8,11 +8,12 @@ if (isset($_COOKIE['login_status'])) {
         $description = $_POST['prd_desc'];
         $user_id = $_SESSION['loginInfo']["id"];
         $prd_name = $_POST['prd_name'];
-        $prd_cat =  isset($_POST['category'])?$_POST['category']:0;
-        $prd_sub_cat = isset($_POST['sub_category'])?$_POST['sub_category']:0;
+        $prd_cat = isset($_POST['category']) ? $_POST['category'] : 0;
+        $prd_sub_cat = isset($_POST['sub_category']) ? $_POST['sub_category'] : 0;
         $prd_price = $_POST['prod_price'];
         $prd_qty = $_POST['prod_qty'];
         $prd_status = $_POST['status'];
+        $product_image = $_FILES['product_image']['name'];
 
         settype($prd_cat, "integer");
         settype($prd_sub_cat, "integer");
@@ -21,34 +22,14 @@ if (isset($_COOKIE['login_status'])) {
 
         // product image
         $fileNameAsString = "";
-        if (isset($_FILES['files']) && !empty($_FILES['files'])) {
-            // Loop through each file
-            foreach ($_FILES['files']['tmp_name'] as $key => $tmp_name) {
-                // Get the temp file path
-                $tmp_file_path = $tmp_name;
 
-                // Make sure the file exists
-                if (file_exists($tmp_file_path)) {
-                    $imageName=str_replace("'", '', $key);
-                    $imageNameKey=str_replace("'", '', $_FILES['files']['name'][$key]);
 
-                    // Generate a new file name
-                    $new_file_name = time() . '-' . $imageName . $imageNameKey;
-
-                    if ($fileNameAsString == "") {
-                        $fileNameAsString = $fileNameAsString . $new_file_name;
-                    } else {
-                        $fileNameAsString = $fileNameAsString . "@" . $new_file_name;
-                    }
-
-                    // Set the destination path
-                    $destination = '../assets/images/product/' . $new_file_name;
-
-                    // Move the file to the destination
-                    move_uploaded_file($tmp_file_path, $destination);
-                }
-            }
+        if ($product_image != '') {
+            $allowed_extension = array('png', 'jpg', 'jpeg');
+            $file_extension = pathinfo($product_image, PATHINFO_EXTENSION);
+            $fileNameAsString = time() . '.' . $file_extension;
         }
+
 
         //check product slug is already exist or not
         $prod_slug = strtolower(str_replace(' ', '-', $prd_name));
@@ -68,6 +49,12 @@ if (isset($_COOKIE['login_status'])) {
         $run_addPrdQuerry = mysqli_query($conn, $addPrd_querry);
         if ($run_addPrdQuerry) {
 
+            // Set the destination path
+            $destination = '../assets/images/product/' . $fileNameAsString;
+            if ($fileNameAsString != '') {
+                move_uploaded_file($_FILES['product_image']['tmp_name'], $destination);
+            }
+
             $_SESSION['status'] = "Added Successfully";
             header("Location: ../add-product.php");
 
@@ -81,11 +68,13 @@ if (isset($_COOKIE['login_status'])) {
         $prd_id = $_POST['prd_id'];
         $prd_name = $_POST['prd_name'];
         $prd_cat = $_POST['category'];
-        $prd_sub_cat = $_POST['sub_category'];
+        $prd_sub_cat = isset($_POST['sub_category'])?$_POST['sub_category']:null;
         $prd_price = $_POST['prod_price'];
         $prd_qty = $_POST['prod_qty'];
         $prd_status = $_POST['status'];
         $description = $_POST['prd_desc'];
+
+        $product_image = $_FILES['product_image']['name'];
 
         //get products previous images
         $previousImages = $_POST['prev_img'];
@@ -95,8 +84,7 @@ if (isset($_COOKIE['login_status'])) {
         settype($prd_id, "integer");
         settype($prd_price, "float");
 
-        // product image
-        $prd_image = $_FILES['files'];
+       
         $fileNameAsString = "";
 
         $updatePrd_query = "";
@@ -104,47 +92,28 @@ if (isset($_COOKIE['login_status'])) {
         settype($cat_id, "integer");
 
 
-
-        if ($prd_image["name"]["0"] == "") {
+        if ($product_image == "") {
             // that means user did not change the previous image
             $updatePrd_query = "UPDATE product SET `prd_name`='$prd_name', `prd_cat_id`=$prd_cat, `prd_sub_cat_id`=$prd_sub_cat, `prd_price`=$prd_price, `quantity`=$prd_qty, `prd_description`='$description', `prd_status`='$prd_status' WHERE `prd_id`=$prd_id";
-
         } else {
-            foreach ($_FILES['files']['tmp_name'] as $key => $tmp_name) {
-                // Get the temp file path
-                $tmp_file_path = $tmp_name;
-
-                // Make sure the file exists
-                if (file_exists($tmp_file_path)) {
-                    // Generate a new file name
-                    $new_file_name = time() . '-' . $_FILES['files']['name'][$key];
-
-                    if ($fileNameAsString == "") {
-                        $fileNameAsString =  $new_file_name;
-                    } else {
-                        $fileNameAsString = $fileNameAsString . "@" . $new_file_name;
-                    }
-
-                    // Set the destination path
-                    $destination = '../assets/images/product/' . $new_file_name;
-
-                    // Move the file to the destination
-                    move_uploaded_file($tmp_file_path, $destination);
-                }
-
-            }
-            //concatenating previous images with the newr images
-            if ($previousImages != "") {
-                $fileNameAsString = $previousImages . "@" . $fileNameAsString;
-            }
+            $file_extension = pathinfo($product_image, PATHINFO_EXTENSION);
+            $fileNameAsString = time() . '.' . $file_extension;
 
             $updatePrd_query = "UPDATE product SET `prd_image`='$fileNameAsString', `prd_name`='$prd_name', `prd_cat_id`=$prd_cat,`prd_sub_cat_id`=$prd_sub_cat, `prd_price`=$prd_price,`quantity`=$prd_qty, `prd_description`='$description',`prd_status`='$prd_status' WHERE `prd_id`=$prd_id";
 
         }
 
+
         $run_updatePrdQuerry = mysqli_query($conn, $updatePrd_query);
 
         if ($run_updatePrdQuerry) {
+              // Set the destination path
+              $destination = '../assets/images/product/' . $fileNameAsString;
+            
+              if ($fileNameAsString != "") {
+         
+                  move_uploaded_file($_FILES['product_image']['tmp_name'], $destination);
+              }
 
             $_SESSION['status'] = "Updated Successfully";
             header("Location: ../products.php");
