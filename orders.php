@@ -284,12 +284,21 @@ if (isset($_SESSION['status'])) {
               type: "POST",
               data: data,
               success: function (response) {
+                console.log(response)
                 const jsonData = $.parseJSON(response);
 
 
                 console.log(jsonData);
 
                 if (jsonData.isSuccess) {
+                  $(`#${orderId}_ord_span`).text("completed");
+                  $(`#${orderId}-ordStatus`).removeClass();
+                  $(`#${orderId}-ordStatus`).addClass("delivery-completed");
+
+                  $(`#${orderId}_deliver_span`).text("completed");
+                  $(`#${orderId}_deliveryStatus`).removeClass();
+                  $(`#${orderId}_deliveryStatus`).addClass("delivery-completed");
+
                   $('#loaderCancelBTN').click();
                   Swal.fire({
                     title: "Great job!",

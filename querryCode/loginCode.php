@@ -23,7 +23,7 @@ if (isset($_POST['loginBTN'])) {
         if (password_verify($login_pass, $row['admin_pass'])) {
 
 
-            if ($row['status'] == "Active" || $row['admin_type'] == "admin" ) {
+            if ($row['status'] == "active" || $row['admin_type'] == "admin" ) {
                 $_SESSION['loginInfo'] = array(
                     "id" => $row['id'],
                     "firstName" => $row['first_name'],

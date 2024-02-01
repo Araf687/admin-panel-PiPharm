@@ -10,7 +10,7 @@ require '../PHPMailer-master/src/PHPMailer.php';
 require '../PHPMailer-master/src/SMTP.php';
 
 
-function sendMail($mailTo, $recipientName)
+function sendMail($mailTo, $recipientName,$conn,$order_id)
 {
     // Create a new PHPMailer instance
     $mail = new PHPMailer(true); // true enables exceptions
@@ -40,8 +40,12 @@ function sendMail($mailTo, $recipientName)
     ";
 
         if($mail->send()){
-            echo json_encode(["isSuccess" => true, "data" => [$mailTo,$recipientName], "message" => "email send Successfully"]);
-        }
+            $isOrderStatusChanged=changeOrderStatus($order_id,$conn);
+            if($isOrderStatusChanged==true){
+                echo json_encode(["isSuccess" => true, "data" => [], "message" => "send mail successfully!"]);
+            }
+
+        } 
         
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
@@ -51,6 +55,20 @@ function sendMail($mailTo, $recipientName)
 
 }
 
+function changeOrderStatus($order_id,$conn)
+{
+
+    // Update order status in the database
+    $sql = "UPDATE orders SET `order_status`='completed', `delivery_status` = 'completed' WHERE id = $order_id";
+    $result = mysqli_query($conn,$sql);
+
+    if ($result) {
+       return true;
+    } else {
+        return json_encode(["isSuccess" => false, "data" => ["error" => mysqli_error($conn)], "message" => "Failed to changed status"]);
+    }
+
+}
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -67,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $customer_name=isset($row['name'])?$row['name']:null;
             $customer_email=isset($row['email'])?$row['email']:null;
 
-            sendMail($customer_email, $customer_name);
+            sendMail($customer_email, $customer_name,$conn,$order_id);
 
         }
         else{

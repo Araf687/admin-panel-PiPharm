@@ -125,8 +125,8 @@ include 'config/dbConn.php';
                                 <td>
                                   <?php echo $pharmacy_email; ?>
                                 </td>
-                                <td id=<?=$pharmacy_id."_status"?>>
-                                  <?php echo $status; ?>
+                                <td id=<?= $pharmacy_id . "_status" ?>>
+                                  <?=ucwords($status) ?>
                                 </td>
 
                                 <td>
@@ -144,9 +144,10 @@ include 'config/dbConn.php';
                                       </a>
                                     </li>
                                     <li>
+                                      <input type="text" id=<?="currentStatus_".$pharmacy_id?> value='<?=$status?>' class="d-none">
                                       <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#blockUserModal"
                                         data-toggle="tooltip" data-placement="top" title="Change Pharmacy Status"
-                                        onclick="<?= "handleClickBlockUser($pharmacy_id, '$status', '$pharmacy_admin_name')" ?>">
+                                        onclick="<?= "handleClickBlockUser($pharmacy_id, '$pharmacy_admin_name')" ?>">
                                         <i class="ri-arrow-up-down-line"></i>
                                       </a>
                                     </li>
@@ -172,12 +173,20 @@ include 'config/dbConn.php';
             sessionStorage.setItem("del_id", pharmacyId);
 
           }
-          const handleClickBlockUser = (pharmacyAdminId, status, pharmacyAdminName) => {
-            const newStatus = (status == 'active' || status == 'Active') ? 'Inactive' : 'Active';
-            const changeStatusModalText = "You want to " + newStatus + " " + pharmacyAdminName + "?";
+          const handleClickBlockUser = (pharmacyAdminId, pharmacyAdminName) => {
+            const status=$(`#currentStatus_${pharmacyAdminId}`).val();
+            const newStatus = status == 'active' ? 'inactive' : 'active';
+            const changeStatusModalText = "You want to " + capitalizeEachWord(newStatus) + " " + pharmacyAdminName + "?";
             $('#changeStatusModalText').text(changeStatusModalText);
             $('#hiddenUserId').val(pharmacyAdminId);
             $('#hiddenUserNewStatus').val(newStatus);
+          }
+
+          function capitalizeEachWord(inputString) {
+            return inputString
+              .split(' ')
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(' ');
           }
 
           const confirmBlockUser = () => {
@@ -194,13 +203,16 @@ include 'config/dbConn.php';
                 const res = JSON.parse(response);
 
                 if (res.isSuccess) {
-                  console.log(`#${userId}_status`);
 
+                  $(`#currentStatus_${userId}`).val(newStatus);
+
+                  $("#hiddenUserNewStatus").val("");
                   $("#hiddenConfirmBTN").click();
-                  $(`#${userId}_status`).text(newStatus);
+                  $(`#${userId}_status`).text(capitalizeEachWord(newStatus));
+               
 
                 } else {
-                 console.log("failed to change status")
+                  console.log("failed to change status")
                 }
               },
             });

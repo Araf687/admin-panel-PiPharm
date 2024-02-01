@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($result) {
 
-            echo json_encode(["isSuccess" => true, "data" => ["userId" =>$pharmacy_admin_id ], "message" => "Status Changed successfully."]);
+            echo json_encode(["isSuccess" => true, "data" => ["userId" =>$pharmacy_admin_id,"sql"=>$sql ], "message" => "Status Changed successfully."]);
 
         } else {
             echo json_encode(["isSuccess" => false, "data" => ["error" => mysqli_error($conn)], "message" => "Failed to change change status."]);
