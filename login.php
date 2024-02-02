@@ -111,6 +111,9 @@
                                         <label for="password">Password</label>
                                     </div>
                                 </div>
+                                <div >
+                                    <p style="text-align:right"><a href="forgot-password.php"><strong>Forget Password</strong> </a></p>
+                                </div>
 
                                 <div class="col-12">
                                     <button class="btn btn-animation w-100 justify-content-center" name="loginBTN"
