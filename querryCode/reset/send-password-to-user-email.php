@@ -66,9 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail_to = isset($_POST['email']) ? mysqli_real_escape_string($conn, $_POST['email']) : null;
         $tableName = $loginType=="authority"?'admin':'pharmacy_admin';
 
-        $sql = "SELECT *
-        FROM .$tableName.
-        WHERE `email`='$mail_to' LIMIT 1";
+        $sql = "SELECT * FROM " .$tableName." WHERE `email`='$mail_to' LIMIT 1";
         $result = mysqli_query($conn, $sql);
 
         if ($result) {

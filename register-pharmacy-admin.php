@@ -115,7 +115,7 @@
 
                                 <div class="col-12">
                                     <button class="btn btn-animation w-100 justify-content-center"
-                                        name="registerPharmacyButton" type="submit">Login</button>
+                                        name="registerPharmacyButton" type="submit">Submit</button>
                                 </div>
                                 <div class="col-12" id="registerPharmacyOption">
                                     <p>Already registered? <a href="login.php"><strong class="text-primary">Login to

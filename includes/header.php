@@ -18,45 +18,6 @@
 
     <div class="nav-right col-6 pull-right right-header p-0">
       <ul class="nav-menus">
-        <!--
-          
-          <li class="onhover-dropdown">
-            <div class="notification-box">
-              <i class="ri-notification-line"></i>
-              <span class="badge rounded-pill badge-theme">4</span>
-            </div>
-            <ul class="notification-dropdown onhover-show-div">
-              <li>
-                <i class="ri-notification-line"></i>
-                <h6 class="f-18 mb-0">Notitications</h6>
-              </li>
-              <li>
-                <p>
-                  <i class="fa fa-circle me-2 font-primary"></i>Delivery processing <span class="pull-right">10 min.</span>
-                </p>
-              </li>
-              <li>
-                <p>
-                  <i class="fa fa-circle me-2 font-success"></i>Order Complete<span class="pull-right">1 hr</span>
-                </p>
-              </li>
-              <li>
-                <p>
-                  <i class="fa fa-circle me-2 font-info"></i>Tickets Generated<span class="pull-right">3 hr</span>
-                </p>
-              </li>
-              <li>
-                <p>
-                  <i class="fa fa-circle me-2 font-danger"></i>Delivery Complete<span class="pull-right">6 hr</span>
-                </p>
-              </li>
-              <li>
-                <a class="btn btn-primary" href="javascript:void(0)">Check all notification</a>
-              </li>
-            </ul>
-          </li>
-          
-          -->
         <li>
           <div class="mode">
             <i class="ri-moon-line"></i>
@@ -86,6 +47,12 @@
             </div>
           </div>
           <ul class="profile-dropdown onhover-show-div">
+            <li>
+              <a href="reset-password.php">
+                <i data-feather="repeat"></i>
+                <span>Reset Password</span>
+              </a>
+            </li>
             <li>
               <a href="setting.php">
                 <i data-feather="settings"></i>

@@ -112,7 +112,7 @@
                                     </div>
                                 </div>
                                 <div >
-                                    <p style="text-align:right"><a href="forgot-password.php"><strong>Forget Password</strong> </a></p>
+                                    <!-- <p style="text-align:right"><a href="forgot-password.php"><strong>Forget Password</strong> </a></p> -->
                                 </div>
 
                                 <div class="col-12">

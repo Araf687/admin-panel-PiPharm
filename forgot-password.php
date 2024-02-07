@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="assets/images/favicon/medicine.png" type="image/x-icon">
-    <link rel="shortcut icon" href="assets/images/favicon/medicine.png" type="image/x-icon">
-    <title>PiPharma Admin Panel</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="assets/images/favicon/medicine.png" type="image/x-icon">
+  <link rel="shortcut icon" href="assets/images/favicon/medicine.png" type="image/x-icon">
+  <title>PiPharma Admin Panel</title>
 
   <!-- Google font-->
   <link
@@ -65,13 +65,13 @@
                 </div>
                 <div class="col-12">
                   <div class="form-floating theme-form-floating log-in-form">
-                    <input type="text" class="form-control" id="user-name" placeholder="Email Address">
+                    <input type="text" class="form-control" id="user-name" name="user-name" placeholder="Email Address">
                     <label for="email">Enter User Name</label>
                   </div>
                 </div>
                 <div class="col-12">
                   <div class="form-floating theme-form-floating log-in-form">
-                    <input type="email" class="form-control" id="email" placeholder="Email Address">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email Address">
                     <label for="email">Enter Email Address</label>
                   </div>
                 </div>
@@ -85,13 +85,14 @@
                 <div class="col-12">
                   <div>
                     <!-- Button trigger modal -->
-                    <button type="button" id="modalOpenBTN" class="btn btn-primary d-none" data-toggle="modal"
-                      data-target="#exampleModal_resetPass">
+                    <!-- <button type="button" id="modalOpenBTN" class="btn btn-primary" data-toggle="modal"
+                      data-target="#exampleModalToggle">
                       Launch demo modal
-                    </button>
+                    </button> -->
+                  
 
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModal_resetPass" tabindex="-1" role="dialog"
+                    <!-- <div class="modal fade" id="exampleModal_resetPass1" tabindex="-1" role="dialog"
                       aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content p-5 ">
@@ -106,21 +107,41 @@
 
 
                         </div>
-                      </div>
-                    </div>
+                      </div> -->
+
                   </div>
                 </div>
-
-
-              </form>
             </div>
 
+
+            </form>
           </div>
+
         </div>
       </div>
     </div>
+    </div>
   </section>
   <!-- forgot password end -->
+
+  <!-- <div class="modal fade theme-modal remove-coupon" id="exampleModal_resetPass1" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header d-block text-center">
+          <h5 class="modal-title w-100" id="exampleModalLabel22">Are You Sure ?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="remove-box">
+            <p>Are you sure you want to remove this item? This action can not be undone.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div> -->
 
 
   <!-- latest jquery-->
@@ -138,7 +159,7 @@
       let request;
 
       $("#reset-password-form").submit(function (event) {
-        $('#modalOpenBTN').click();
+        document.getElementById('modalOpenBTN').click()
 
         event.preventDefault();
         if (request) {
