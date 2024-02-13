@@ -143,7 +143,7 @@ include 'config/dbConn.php';
                                   </td>
 
                                   <td>
-                                    <?php echo $prd_name." ".$slNo; ?>
+                                    <?php echo $prd_name?>
                                   </td>
 
                                   <td>
