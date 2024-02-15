@@ -21,7 +21,8 @@ function sendMail($mailTo, $recipientName,$conn,$order_id)
         $mail->Host = 'smtp.gmail.com';               // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                             // Enable SMTP authentication
         $mail->Username = 'pharmacypi012@gmail.com';         // SMTP username
-        $mail->Password = 'pizeocqeceaeczjx';            // SMTP password
+        // $mail->Password = 'pizeocqeceaeczjx';            // SMTP password
+        $mail->Password = 'ykxjqdjjtrkrvaoq';            // SMTP password
         $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 587;                              // TCP port to connect to
 
@@ -42,7 +43,7 @@ function sendMail($mailTo, $recipientName,$conn,$order_id)
         if($mail->send()){
             $isOrderStatusChanged=changeOrderStatus($order_id,$conn);
             if($isOrderStatusChanged==true){
-                echo json_encode(["isSuccess" => true, "data" => [], "message" => "send mail successfully!"]);
+                echo json_encode(["isSuccess" => true, "data" => ["customerName"=>$recipientName,"destinationMail"=>$mailTo], "message" => "send mail successfully!"]);
             }
 
         } 

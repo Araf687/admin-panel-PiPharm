@@ -302,8 +302,9 @@ if (isset($_SESSION['status'])) {
                   $('#loaderCancelBTN').click();
                   Swal.fire({
                     title: "Great job!",
-                    text: "Mail sended successfully to customer!",
-                    icon: "success"
+                    text: "Mail sended successfully to "+jsonData.data.customerName+"! (mail: "+jsonData.data.destinationMail+")",
+                    icon: "success",
+                    
                   });
                 }
 
