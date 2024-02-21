@@ -35,7 +35,7 @@ function sendMail($mailTo, $recipientName,$conn,$order_id)
         $mail->Subject = 'PI-Pharm Delivery Confirm Email';
         $mail->Body = "<p style='margin-bottom:15px; font-weight:600'>Dear Sir,</p>
     <p style='margin-bottom:10px'>The medicines you ordered from PI Pharmacy have been delivered. I hope you have received our product! Please let us know if you have not received the product or if the product has any problems. You can reply to us here. Or you can contact us.</p>
-    <p>Our contact number: 01614756856</p>
+    <p>Our contact number: +880 16 3230 7542</p>
     <p style='margin-top:10px'>Happy Shopping!</p>
     <p style='margin-top:10px; color:green; font-weight:600'>PI Pharmacy</p>
     ";
@@ -76,6 +76,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         $customer_id = isset($_POST['customerId']) ?intval( $_POST['customerId'] ): null;
         $order_id = isset($_POST['orderId']) ?intval($_POST['orderId'] ): null;
+
+    //     $sql1="SELECT
+    //     orders.order_id,
+    //     pharmacy_admin.contact_no,
+    //     user.name,
+    //     user.email
+    // FROM
+    //     orders
+    // JOIN
+    //     pharmacy_admin ON orders.pharmacy_id = pharmacy_admin.id
+    // JOIN
+    //     user ON orders.cust_id = user.id LIMIT 1";
 
         $sql = "SELECT * FROM user WHERE `id`=$customer_id LIMIT 1";
         $result = mysqli_query($conn, $sql);

@@ -18,17 +18,77 @@
 
     <div class="nav-right col-6 pull-right right-header p-0">
       <ul class="nav-menus">
+
+        <li class="position-relative me-3" id="dropdownMenuButton" class="rounded-circle dropdown-toggle"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="ri-notification-3-line" style="cursor:pointer"></i>
+          <span class="badge bg-danger rounded-circle d-flex justify-content-center align-items-center"
+            style="width:20px;height:20px; position:absolute;left:49%;" data-bs-toggle="dropdown" aria-expanded="false">
+            <?php
+            $pharmacy_id = $_SESSION['loginInfo']['id'];
+            $sql = "SELECT * from notifications WHERE `pharmacy_id`=$pharmacy_id AND `notification_user_type`='pharmacy' AND `status`=0";
+            $result = mysqli_query($conn, $sql);
+            $row_count = mysqli_num_rows($result);
+            echo $row_count;
+            ?>
+          </span>
+          <ul class="dropdown-menu rounded px-2 py-3" style="width:260px">
+            <?php
+            $i = 0;
+            // Fetch and display notification details from the database
+            while ($row = mysqli_fetch_assoc($result)) {
+              $notificationId = $row['id'];
+              $i = $i + 1;
+              if ($i < 6) {
+                ?>
+                <li>
+                  <a href='<?= "show-notification.php?id=" . $notificationId ?>' class="p-0 m-0"
+                    style="text-decoration:none;color:black">
+                    <div class="d-flex">
+                      <div>
+                        <i class="ri-shopping-bag-fill fs-4" style="color:#6670bd"></i>
+                      </div>
+                      <div class="ps-2">
+                        <span style="font-weight:600; font-size:14px;" class="lh-0">
+                          <?= $row['title'] ?>
+                        </span>
+                        <small style="font-size:12px;line-height:0px">
+                          <?= explode("on", $row['description'])[0] ?>
+                        </small>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <?php
+              }
+            }
+            if($i>1){
+              echo "<hr/>";
+            }
+            if ($row_count > 5) {
+              ?>
+              <li class="text-center">
+                <small><strong>See more..</strong></small>
+              </li>
+            <?php }
+            if($row_count<1){
+              echo "<li class='p-1 text-center'><strong>Empty!</strong></li>";
+            } ?>
+          </ul>
+
+        </li>
         <li>
           <div class="mode">
             <i class="ri-moon-line"></i>
           </div>
         </li>
+
         <li class="profile-nav onhover-dropdown pe-0 me-0">
           <div class="media profile-media">
             <?php
             $admin_img = "assets/images/default.jpg";
             $isPharmacyAdmin = $_SESSION['loginInfo']['adminType'] === "pharmacy";
-            if (isset($_SESSION['loginInfo']['adminImg']) && $_SESSION['loginInfo']['adminImg']!=' ') {
+            if (isset($_SESSION['loginInfo']['adminImg']) && $_SESSION['loginInfo']['adminImg'] != ' ') {
               $admin_img = $isPharmacyAdmin ? "assets/images/pharmacy_admins/" . $_SESSION['loginInfo']['adminImg'] : "assets/images/admins/" . $_SESSION['loginInfo']['adminImg'];
             }
             ?>
@@ -70,6 +130,6 @@
       </ul>
     </div>
   </div>
-  
+
 </div>
 <!-- Page Header Ends-->
