@@ -155,7 +155,7 @@ include 'config/dbConn.php';
                                   <td>
                                     <?php echo $quantity; ?>
                                   </td>
-                                  <td class="td-price">$
+                                  <td class="td-price">৳
                                     <?php echo $prd_price; ?>
                                   </td>
 
