@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         $userId=intval($_POST['user_id']);
         $loginType = $_SESSION['loginInfo']['adminType'];
-        $currentPassword = $_POST['current_password'];
+        $currentPassword = password_hash( $_POST['current_password'], PASSWORD_DEFAULT);
         $newPassword = $_POST['new_password'];
 
         $tableName = $loginType=="admin"?'admin':'pharmacy_admin';
@@ -32,8 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (mysqli_num_rows($result) > 0) {
                 $row=mysqli_fetch_assoc($result);
                 $user_password=$row['admin_pass'];
-
-
+              
                
            
 
@@ -48,12 +47,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         echo json_encode(["isSuccess" => true, "data" => ["result" => true], "message" => "Password sent to your mail successfully."]);
                     }
                     else{
-                        echo json_encode(["isSuccess" => false, "data" => ["error" => mysqli_error($conn) ], "message" => "invalid user"]);
+                        echo json_encode(["isSuccess" => false, "data" => ["error" => mysqli_error($conn) ,"sql"=>$sql], "message" => "invalid user"]);
                     }
 
 
                 } else {
-                    echo json_encode(["isSuccess" => false, "data" => ["error" => "password does verified","currentPassword"=>$currentPassword], "message" => "invalid user"]);
+                    echo json_encode(["isSuccess" => false, "data" => ["error" => "password does not verified","currentPassword"=>$currentPassword], "message" => "invalid user"]);
                 }
 
             } else {

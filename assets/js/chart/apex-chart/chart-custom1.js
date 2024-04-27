@@ -221,8 +221,8 @@ var options = {
 console.log("chart custom");
 var options = {
     series: [{
-        name: 'series1',
-        data: [60, 70, 54, 51, 42, 109, 100]
+        name: 'revenue',
+        data: [60, 70, 54, 51, 42, 109, 100,102]
     }],
     chart: {
         height: 320,
@@ -332,7 +332,7 @@ var options = {
     yaxis: {
         labels: {
             formatter: function (value) {
-                return "$" + value;
+                return "৳" + value;
             }
         },
         crosshairs: {
